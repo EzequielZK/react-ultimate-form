@@ -2,6 +2,8 @@
 
 This is a react form library made to simplify complex uses and provide automated features.
 
+Also, Material-UI is a peer dependency. Checkout their [installation guide](https://mui.com/material-ui/getting-started/installation/)
+
 ## Handlers
 
 React Ultimate Form uses two mandatory handlers, that work like a react context. `FormHandler` and `FormGroupHandler`
@@ -44,3 +46,5 @@ This is the group handler. It is responsible for handle all the rules and valida
     )
   }
 ```
+
+## Components
