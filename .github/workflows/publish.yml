@@ -1,7 +1,8 @@
-name: CI
+name: Publish Workflow
 on:
   push:
-    - master
+    branches:
+      - master
 jobs:
   publish:
     name: Build, bump & publish to npm
