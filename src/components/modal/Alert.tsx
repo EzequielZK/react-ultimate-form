@@ -1,13 +1,13 @@
-import React from "react";
-import Snackbar from "@mui/material/Snackbar";
-import Alert, { AlertColor } from "@mui/material/Alert";
-import { setAlertRef } from "./openModal";
+import React from 'react';
+import Snackbar from '@mui/material/Snackbar';
+import Alert, { AlertColor } from '@mui/material/Alert';
+import { setAlertRef } from './openModal';
 
 export default class AlertFeedback extends React.Component {
   state = {
     open: false,
-    variant: "success" as AlertColor,
-    text: "",
+    variant: 'success' as AlertColor,
+    text: '',
   };
 
   componentDidMount(): void {
@@ -26,7 +26,7 @@ export default class AlertFeedback extends React.Component {
   };
 
   handleClose = (_: any, reason?: string) => {
-    if (reason === "clickaway") {
+    if (reason === 'clickaway') {
       return;
     }
 
@@ -37,7 +37,7 @@ export default class AlertFeedback extends React.Component {
     const { open, variant, text } = this.state;
     return (
       <Snackbar
-        anchorOrigin={{ vertical: "top", horizontal: "center" }}
+        anchorOrigin={{ vertical: 'top', horizontal: 'center' }}
         open={open}
         autoHideDuration={5000}
         onClose={this.handleClose}

@@ -1,3 +1,3 @@
 export default function emailMask(value: string) {
-    return value.toLowerCase();
-  }
+  return value.toLowerCase();
+}

@@ -1,3 +1,3 @@
 export function onlyNumbersMask(value: string) {
-    return value ? value.replace(/\D/g, "") : value;
-  }
+  return value ? value.replace(/\D/g, '') : value;
+}

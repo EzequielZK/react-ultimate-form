@@ -7,8 +7,9 @@ export default function isValidPassword(
     return { error: 'Por favor, insira uma senha válida' };
   }
 
-  const validPassword =
-    /((?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[@#$%]).{6,20})/.test(password);
+  const validPassword = /((?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[@#$%]).{6,20})/.test(
+    password
+  );
 
   return {
     error: validPassword

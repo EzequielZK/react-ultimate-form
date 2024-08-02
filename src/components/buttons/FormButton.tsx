@@ -1,15 +1,15 @@
-import * as React from 'react'
+import * as React from 'react';
 
-import { FormGroupHandlerContext } from "../../context/form/FormGroupHandler";
-import { FormHandlerContext } from "../../context/form/FormHandler";
-import { FormButtonProps } from "./types";
-import IconButton from "@mui/material/IconButton";
-import Button from "@mui/material/Button";
-import CircularProgress from "@mui/material/CircularProgress";
+import { FormGroupHandlerContext } from '../../context/form/FormGroupHandler';
+import { FormHandlerContext } from '../../context/form/FormHandler';
+import { FormButtonProps } from './types';
+import IconButton from '@mui/material/IconButton';
+import Button from '@mui/material/Button';
+import CircularProgress from '@mui/material/CircularProgress';
 
 export default function FormButton({
   loading,
-  variant = "contained",
+  variant = 'contained',
   onClick,
   children,
   icon,
@@ -24,8 +24,9 @@ export default function FormButton({
     clear,
   } = React.useContext(FormGroupHandlerContext);
 
-  const { submit, hasContext: handlerContext } =
-    React.useContext(FormHandlerContext);
+  const { submit, hasContext: handlerContext } = React.useContext(
+    FormHandlerContext
+  );
 
   const types = {
     submit() {
@@ -58,7 +59,7 @@ export default function FormButton({
     ) : (
       <Button
         {...btnProps}
-        sx={{ display: "flex", gap: 1, ...btnProps.sx }}
+        sx={{ display: 'flex', gap: 1, ...btnProps.sx }}
         type="button"
       >
         {btnProps.children}
@@ -69,13 +70,13 @@ export default function FormButton({
     <Component
       {...props}
       color={color}
-      sx={{ textTransform: "none", ...props.sx }}
+      sx={{ textTransform: 'none', ...props.sx }}
       variant={variant}
       disabled={
         disabled !== undefined
           ? disabled
           : hasContext
-          ? (props.type === "submit" || props.type === "submitAll") &&
+          ? (props.type === 'submit' || props.type === 'submitAll') &&
             (!canSubmit || loading)
           : loading ?? disabled
       }

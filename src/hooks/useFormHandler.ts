@@ -1,7 +1,6 @@
-
-import { useContext } from "react";
-import { FormHandlerContext } from "../context/form/FormHandler";
-import { InitialFormParams } from "../context/form/types";
+import { useContext } from 'react';
+import { FormHandlerContext } from '../context/form/FormHandler';
+import { InitialFormParams } from '../context/form/types';
 
 export default function useFormHandler(groupName: string) {
   const formHandlerContext = useContext(FormHandlerContext);

@@ -1,7 +1,7 @@
-import type { ButtonProps } from "@mui/material/Button";
+import { ButtonProps } from '@mui/material/Button';
 
-export interface FormButtonProps extends Omit<ButtonProps, "type"> {
+export interface FormButtonProps extends Omit<ButtonProps, 'type'> {
   loading?: boolean;
   icon?: boolean;
-  type?: "submit" | "clear" | "submitAll";
+  type?: 'submit' | 'clear' | 'submitAll';
 }
