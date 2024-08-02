@@ -21,9 +21,3 @@ export type LabelValueType = {
 };
 
 export type DateType = Date | string | null;
-
-export type StepperComponents = {
-  nextStep?: () => void;
-  prevStep?: () => void;
-  closeModal?: () => void;
-};
