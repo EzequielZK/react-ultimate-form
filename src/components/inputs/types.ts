@@ -1,12 +1,12 @@
-import type { DateType, LabelValueType } from '../../lib/globalTypes';
-import type { MaskTypes } from '../../lib/masks/types';
-import type { ValidationTypes } from '../../lib/validations/types';
+import { DateType, LabelValueType } from '../../lib/globalTypes';
+import { MaskTypes } from '../../lib/masks/types';
+import { ValidationTypes } from '../../lib/validations/types';
 import { SvgIconComponent } from '@mui/icons-material';
-import type { FormControlLabelProps } from '@mui/material';
-import type { SelectProps } from '@mui/material/Select';
-import type { TextFieldProps } from '@mui/material/TextField';
-import type { RadioGroupProps } from '@mui/material/RadioGroup';
-import type { ReactNode } from 'react';
+import { FormControlLabelProps } from '@mui/material';
+import { SelectProps } from '@mui/material/Select';
+import { TextFieldProps } from '@mui/material/TextField';
+import { RadioGroupProps } from '@mui/material/RadioGroup';
+import { ReactNode } from 'react';
 
 export type InputProps = Omit<TextFieldProps, 'defaultValue' | 'onChange'> & {
   name: string;

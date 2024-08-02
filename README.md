@@ -2,17 +2,13 @@
 
 This is a react form library made to simplify complex uses and provide automated features.
 
-> This TSDX setup is meant for developing React component libraries (not apps!) that can be published to NPM. If you’re looking to build a React-based app, you should use `create-react-app`, `razzle`, `nextjs`, `gatsby`, or `react-static`.
-
-> If you’re new to TypeScript and React, checkout [this handy cheatsheet](https://github.com/sw-yx/react-typescript-cheatsheet/)
-
 ## Handlers
 
 React Ultimate Form uses two mandatory handlers, that work like a react context. `FormHandler` and `FormGroupHandler`
 
 ### FormHandler
 
-This one is responsible for handle all of your form data and forms data. You can have groups of forms inside `FormHandler` using `FormGroupHandler`. But you must have at least one group always.
+This one is responsible for handle all of your form data and form groups data. You can have groups of forms inside `FormHandler` using `FormGroupHandler`. But you must have at least one group always.
 
 > Usally you don't need to pass any parameter to this handler, but if you have more than one group of forms inside of it, the `onSubmit` parameter will submit all the data from all the groups of forms.
 
@@ -22,12 +18,12 @@ This is the group handler. It is responsible for handle all the rules and valida
 
 #### Parameters
 
-|Parameter    |Description                                                     |Required|
-|-------------|----------------------------------------------------------------|--------|
-|name         |Name that identifies the form inside the handler context        |Yes     |
-|onSubmit     |Callback that triggers when the form is submitted               |No      |
-|submitForm   |Used to identify what group is the one that will submit all data|No      |
-|clearOnSubmit|Clear the form after submit                                     |No      |
+| Parameter     | Description                                                      | Required |
+| :------------ | :--------------------------------------------------------------- | :------- |
+| name          | Name that identifies the form inside the handler context         | Yes      |
+| onSubmit      | Callback that triggers when the form is submitted                | No       |
+| submitForm    | Used to identify what group is the one that will submit all data | No       |
+| clearOnSubmit | Clear the form after submit                                      | No       |
 
 ```ts
   import {FormHandler, FormGroupHandler, Input, FormButton} from 'react-ultimate-form'
