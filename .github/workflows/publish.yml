@@ -25,7 +25,7 @@ jobs:
       # Create the new release:
       - name: Bump version & push
         run: |
-          git config --global user.name 'Automated publish'
+          git config --global user.name 'EzequielZK'
           git config --global user.email 'EzequielZK@users.noreply.github.com'
           npm version patch
           git push && git push --tags
