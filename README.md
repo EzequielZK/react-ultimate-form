@@ -116,7 +116,7 @@ There some main input validations that you can use in a automated way, just pass
 
 - **isCep** - Return an error if value has less than 8 characters
 - **isCpf** - It checks if the CPF is valid using the two last digits
-- **isEmail** - It checks if the value has a `@` and finishes with at least a `.com`
+- **isEmail** - It checks if the value has a `@` and ends with at least a `.com`
 - **isPhone** - It checks if the value has exactly 11 digits length
 - **isValidPassword** - It validates the value with at least 6 characters and maximum of 20. It has to have a special character, a upper case and lower casa character and a number
 
