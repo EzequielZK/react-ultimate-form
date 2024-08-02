@@ -1,0 +1,72 @@
+{
+  "version": "0.1.10",
+  "license": "MIT",
+  "main": "dist/index.js",
+  "typings": "dist/index.d.ts",
+  "files": [
+    "dist",
+    "src"
+  ],
+  "engines": {
+    "node": ">=10"
+  },
+  "scripts": {
+    "start": "tsdx watch",
+    "build": "tsdx build",
+    "test": "tsdx test --passWithNoTests",
+    "lint": "tsdx lint",
+    "prepare": "tsdx build",
+    "size": "size-limit",
+    "analyze": "size-limit --why",
+    "deploy": "npm version patch && npm publish"
+  },
+  "peerDependencies": {
+    "react": ">=16",
+    "@emotion/cache": ">=11.13.1",
+    "@emotion/react": ">=11.13.0",
+    "@mui/icons-material": ">=5.16.6",
+    "@mui/material": ">=5.16.6"
+  },
+  "husky": {
+    "hooks": {
+      "pre-commit": "tsdx lint"
+    }
+  },
+  "prettier": {
+    "printWidth": 80,
+    "semi": true,
+    "singleQuote": true,
+    "trailingComma": "es5"
+  },
+  "name": "react-ultimate-form",
+  "author": "Ezequiel",
+  "module": "dist/react-form-handler.esm.js",
+  "size-limit": [
+    {
+      "path": "dist/react-form-handler.cjs.production.min.js",
+      "limit": "10 KB"
+    },
+    {
+      "path": "dist/react-form-handler.esm.js",
+      "limit": "10 KB"
+    }
+  ],
+  "devDependencies": {
+    "@size-limit/preset-small-lib": "^11.1.4",
+    "@types/react": "^18.3.3",
+    "@types/react-dom": "^18.3.0",
+    "husky": "^9.1.4",
+    "react": "^18.3.1",
+    "react-dom": "^18.3.1",
+    "size-limit": "^11.1.4",
+    "tsdx": "^0.14.1",
+    "tslib": "^2.6.3",
+    "typescript": "^5.5.4"
+  },
+  "dependencies": {
+    "@emotion/cache": "^11.13.1",
+    "@emotion/react": "^11.13.0",
+    "@mui/icons-material": "^5.16.6",
+    "@mui/material": "^5.16.6"
+  }
+}
