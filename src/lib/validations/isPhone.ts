@@ -9,6 +9,6 @@ export default function isPhone(value: string): ValueValidationResponse {
   const validPhone = phoneWithoutMask && phoneWithoutMask.length === 11;
 
   return {
-    error: validPhone ? '' : 'Número inválido!',
+    error: validPhone ? null : 'Número inválido!',
   };
 }
