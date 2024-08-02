@@ -1,6 +1,4 @@
 import { DateType, LabelValueType } from '../../lib/globalTypes';
-import { MaskTypes } from '../../lib/masks/types';
-import { ValidationTypes } from '../../lib/validations/types';
 import { SvgIconComponent } from '@mui/icons-material';
 import { FormControlLabelProps } from '@mui/material';
 import { SelectProps } from '@mui/material/Select';
@@ -8,10 +6,16 @@ import { TextFieldProps } from '@mui/material/TextField';
 import { RadioGroupProps } from '@mui/material/RadioGroup';
 import { ReactNode } from 'react';
 
+export type ValueValidationResponse = {
+  error: string | null;
+};
+
+export type ValidationFunctionType = (value: string) => ValueValidationResponse;
+
 export type InputProps = Omit<TextFieldProps, 'defaultValue' | 'onChange'> & {
   name: string;
-  mask?: MaskTypes;
-  validation?: ValidationTypes;
+  mask?: (value: string) => string;
+  validation?: ValidationFunctionType;
   Icon?: ReactNode;
   iconColor?: string;
   containerStyle?: any;
@@ -20,7 +24,6 @@ export type InputProps = Omit<TextFieldProps, 'defaultValue' | 'onChange'> & {
   defaultValue?: string;
   noIconPadding?: boolean;
   showLabel?: boolean;
-  maskFunction?: (value: any) => string;
   call?: (
     value: any,
     setAnotherFieldValue: (name: string, value: any) => void

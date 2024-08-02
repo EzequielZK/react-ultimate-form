@@ -62,8 +62,8 @@ Every form has components like `Input`, `Select` and etc. Each component receive
 | Parameter       | Description                                                                                                                  | Type     | Required |
 | :-------------- | :--------------------------------------------------------------------------------------------------------------------------- | :------- | :------- |
 | name            | Name that identifies the component inside the form                                                                           | String   | Yes      |
-| mask            | String that represents the mask the input will wrap it's text                                                                | String   | No       |
-| validation      | String that represents the validation the input will use to validate data                                                    | String   | No       |
+| mask            | Callback that takes the input value on each change as a paramter and must return a string                                    | Function | No       |
+| validation      | Callback that takes the input value on each change as a paramter and must return a object                                    | Function | No       |
 | containerStyle  | Object that defines the style of the input's container                                                                       | Object   | No       |
 | iconColor       | Defines the color of the input's icon                                                                                        | String   | No       |
 | iconPosition    | Defines the position of the input's icon                                                                                     | String   | No       |
@@ -74,35 +74,38 @@ Every form has components like `Input`, `Select` and etc. Each component receive
 | loading         | Replaces the icon position for a `CircularProgress` while true                                                               | Boolean  | No       |
 | maxLength       | Defines the string max length                                                                                                | Number   | No       |
 | isEqualTo       | Object that compares the input's value with another input's value of the same form                                           | Object   | No       |
-| maskFunction    | Callback that triggers on input's change and you can use to define a custom mask                                             | Function | No       |
 | submitOnEnter   | Triggers submit on press `Enter`                                                                                             | Boolean  | No       |
 
 #### Examples
 
 ##### Masks
 
-There some main input masks that you can use in a automated way, just passing the mask name in the attribute `mask`.
-
-- **cepMask** - Format value like `00000-000`
-- **cpfCnpjMask** - Format the first 11 digits as a CPF and if you keep typing, it turn into a CNPJ format, like `000.000.000-00` and `00.000.000/0000-00`
-- **emailMask** - It only keeps value lower case
-- **moneyMask** - It adds the `R$` at the start of value and formats value and it's cents. It goes like this: `R$ 100,00`
-- **onlyNumbersMask** - Restrict the input to render only numbers
-- **phoneMask** - It formats like a phone number. Like this: `(00) 0 0000-0000`
-
 ```ts
   import {FormHandler, FormGroupHandler, Input, FormButton} from 'react-ultimate-form'
 
   export default function Form(){
 
-    const onSubmit = (data: any) => {
-      console.log(data)
+    //input: 8000
+    //output: USD 8.000,00
+    const moneyMask = (value: string) => {
+
+      let newValue = value.replace(/\D/g, "");
+
+      const counter = (value.length - 5) / 3;
+
+      newValue = newValue.replace(/^([.\d]+)(\d{2})$/, 'USD $1,$2');
+      let i = 0;
+      for (; i < counter; i++) {
+        newValue = newValue.replace(/(\d+)(\d{3})([.,\d]+)$/, '$1.$2$3');
+      }
+
+      return newValue;
     }
 
     return(
       <FormHandler>
-        <FormGroupHandler name='exampleForm' onSubmit={onSubmit}>
-          <Input name='value' mask='moneyMask' />
+        <FormGroupHandler name='exampleForm'>
+          <Input name='value' mask={moneyMask} />
           <FormButton type='submit'>Submit</FormButton>
         </FormGroupHandler>
       <FormHandler>
@@ -112,29 +115,157 @@ There some main input masks that you can use in a automated way, just passing th
 
 ##### Validations
 
-There some main input validations that you can use in a automated way, just passing the validation name in the attribute `validation`.
+```ts
+  import {FormHandler, FormGroupHandler, Input, FormButton} from 'react-ultimate-form'
 
-- **isCep** - Return an error if value has less than 8 characters
-- **isCpf** - It checks if the CPF is valid using the two last digits
-- **isEmail** - It checks if the value has a `@` and ends with at least a `.com`
-- **isPhone** - It checks if the value has exactly 11 digits length
-- **isValidPassword** - It validates the value with at least 6 characters and maximum of 20. It has to have a special character, a upper case and lower casa character and a number
+  export default function Form(){
+
+    //This function tests if the value has a format of an email and return an error if it's not
+    const isEmail = (value: string): {error: string | null} {
+      if (!value) {
+        return { error: 'Insert a valid email' };
+      }
+      value.trim();
+      const validEmail = /^\w+([.-]?\w+)*@\w+([.-]?\w+)*(\.\w{2,3})+$/.test(value);
+      return {
+        error: validEmail ? null : 'Invalid email',
+      };
+    }
+
+    return(
+      <FormHandler>
+        <FormGroupHandler name='exampleForm'>
+          <Input name='email' validation={isEmail} />
+          <FormButton type='submit'>Submit</FormButton>
+        </FormGroupHandler>
+      <FormHandler>
+    )
+  }
+```
+
+##### isEqualTo
 
 ```ts
   import {FormHandler, FormGroupHandler, Input, FormButton} from 'react-ultimate-form'
 
   export default function Form(){
 
-    const onSubmit = (data: any) => {
-      console.log(data)
-    }
+    //The 'field' attribute is the name of the field you want to compare the value
+    //The 'errorMessage' attribute is the message you want to display below the input in case of error
+    return(
+      <FormHandler>
+        <FormGroupHandler name='exampleForm'>
+          <Input name='password'  />
+          <Input name='confirmPassword' isEqualTo={{field: 'password', errorMessage: 'Your passwords do not match' }} />
+          <FormButton type='submit'>Submit</FormButton>
+        </FormGroupHandler>
+      <FormHandler>
+    )
+  }
+```
+
+### Select
+
+#### Parameters
+
+| Parameter       | Description                                                    | Type    | Required |
+| :-------------- | :------------------------------------------------------------- | :------ | :------- |
+| name            | Name that identifies the component inside the form             | String  | Yes      |
+| options         | Array of items to be displayed                                 | Array   | Yes      |
+| removeOnUnmount | Removes the value when the component is unmounted              | Boolean | No       |
+| loading         | Replaces the icon position for a `CircularProgress` while true | Boolean | No       |
+| submitOnSelect  | Triggers submit on select an option                            | Boolean | No       |
+
+#### Examples
+
+```ts
+  import {FormHandler, FormGroupHandler, Select, FormButton} from 'react-ultimate-form'
+
+  export default function Form(){
+
+    const filmsCategory = [
+      {
+        label: "Action",
+        value: 1
+      },
+      {
+        label: "Comedy",
+        value: 2
+      },
+      {
+        label: "Drama",
+        value: 3
+      }
+    ]
 
     return(
       <FormHandler>
-        <FormGroupHandler name='exampleForm' onSubmit={onSubmit}>
-          <Input name='email' mask='emailMask' validation='isEmail' />
+        <FormGroupHandler name='exampleForm'>
+          <Select name='category' options={filmsCategory} />
           <FormButton type='submit'>Submit</FormButton>
         </FormGroupHandler>
+      <FormHandler>
+    )
+  }
+```
+
+### FormButton
+
+#### Parameters
+
+| Parameter | Description                                   | Type   | Required |
+| :-------- | :-------------------------------------------- | :----- | :------- |
+| type      | String that represents the type of the button | String | No       |
+
+#### Examples
+
+There are two main types you need to consider: `submit` will submit the current form group this button is part of, and `submitAll` will submit all the data from all form groups inside the `FormHandler` context.
+
+```ts
+  import {FormHandler, FormGroupHandler, Select, Input, FormButton} from 'react-ultimate-form'
+
+    function StepOneForm({setStep}){
+      const nextStep = () => {
+        setStep(prevStep => prevStep + 1)
+      }
+      return (
+        <FormGroupHandler name='stepOneForm' onSubmit={nextStep}>
+          <Input name='name' />
+          <Input name='email' />
+          <Input name='phone' />
+          <FormButton type='submit'>Submit</FormButton>
+        </FormGroupHandler>
+      )
+    }
+
+    function StepTwoForm({setStep}){
+      const nextStep = () => {
+        setStep(prevStep => prevStep + 1)
+      }
+      return (
+        <FormGroupHandler name='stepOneForm' submitForm>
+          <Input name='address' />
+          <Input name='password' />
+          <Input name='confirmPassword' isEqualTo={{field: 'password', errorMessage: 'Your passwords do not match'}} />
+          <FormButton type='submitAll'>Submit</FormButton>
+        </FormGroupHandler>
+      )
+    }
+
+
+  export default function Stepper(){
+    const [step, setStep] = useState(0);
+
+    const submitAll = (data: any) => {
+      console.log(data) //Console all the data from all form groups
+    }
+
+    const forms = [StepOneForm, StepTwoForm];
+    const Form = forms[step]
+
+    return(
+      <FormHandler onSubmit={submitAll}>
+        <Form setStep={setStep}>
       <FormHandler>
     )
   }

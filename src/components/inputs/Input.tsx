@@ -8,11 +8,7 @@ import React, {
 import Stack from '@mui/material/Stack';
 
 import useFormGroupHandler from '../../hooks/useFormGroupHandler';
-import { MaskFunctionType } from '../../lib/masks/types';
-import { ValidationFunctionType } from '../../lib/validations/types';
 import { InputProps } from './types';
-import masks from '../../lib/masks';
-import validations from '../../lib/validations';
 import TextField from '@mui/material/TextField';
 import InputAdornment from '@mui/material/InputAdornment';
 import CircularProgress from '@mui/material/CircularProgress';
@@ -43,7 +39,6 @@ export default function Input({
   onChange,
   maxLength,
   isEqualTo,
-  maskFunction,
   submitOnEnter,
   ...props
 }: InputProps) {
@@ -87,27 +82,12 @@ export default function Input({
     }
   }, [defaultValue]);
 
-  let maskToUse: MaskFunctionType;
-  let validationToTest: ValidationFunctionType;
-
-  if (mask) {
-    maskToUse = masks[mask];
-  }
-
-  if (validation) {
-    validationToTest = validations[validation];
-  }
-
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const { value: newValue } = event.target;
 
     validate(newValue);
 
-    let maskValue = maskToUse ? maskToUse(newValue) : newValue;
-
-    if (maskFunction) {
-      maskValue = maskFunction(maskValue);
-    }
+    let maskValue = mask ? mask(newValue) : newValue;
 
     if (maxLength) {
       maskValue = maskValue.substring(0, maxLength);
@@ -126,8 +106,8 @@ export default function Input({
 
   const validate = (newValue: string) => {
     if (newValue) {
-      if (validationToTest) {
-        const { error } = validationToTest(newValue);
+      if (validation) {
+        const { error } = validation(newValue);
         setError(error);
       }
 
