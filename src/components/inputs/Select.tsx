@@ -49,7 +49,9 @@ export default function Select({
   }, []);
 
   useEffect(() => {
-    setValue(defaultValue);
+    if (defaultValue !== value) {
+      setValue(defaultValue);
+    }
   }, [defaultValue]);
 
   const handleChange = (event: SelectChangeEvent<any>) => {
