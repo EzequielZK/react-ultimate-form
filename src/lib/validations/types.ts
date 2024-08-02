@@ -1,4 +1,4 @@
-import validations from "@/lib/validations";
+import validations from '@/lib/validations';
 
 export type ValueValidationResponse = {
   error: string | null;
@@ -6,6 +6,4 @@ export type ValueValidationResponse = {
 
 export type ValidationTypes = keyof typeof validations;
 
-export type ValidationFunctionType = (
-  value: string
-) => ValueValidationResponse;
+export type ValidationFunctionType = (value: string) => ValueValidationResponse;

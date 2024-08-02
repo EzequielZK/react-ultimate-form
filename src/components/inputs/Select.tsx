@@ -1,4 +1,4 @@
-import * as React from 'react'
+import * as React from 'react';
 
 import useFormGroupHandler from '../../hooks/useFormGroupHandler';
 import MuiSelect, { SelectChangeEvent } from '@mui/material/Select';
@@ -10,7 +10,7 @@ import CircularProgress from '@mui/material/CircularProgress';
 import Typography from '@mui/material/Typography';
 import InputLabel from '@mui/material/InputLabel';
 import Chip from '@mui/material/Chip';
-import FormHelperText from '@mui/material/FormHelperText'
+import FormHelperText from '@mui/material/FormHelperText';
 
 const ITEM_HEIGHT = 48;
 const ITEM_PADDING_TOP = 8;
@@ -106,8 +106,8 @@ export default function Select({
         }}
       >
         {loading ? (
-          <MenuItem value='loading' disabled>
-            <CircularProgress size={20} color='inherit' />
+          <MenuItem value="loading" disabled>
+            <CircularProgress size={20} color="inherit" />
           </MenuItem>
         ) : options.length ? (
           options.map(opt => (
@@ -122,7 +122,7 @@ export default function Select({
             </MenuItem>
           ))
         ) : (
-          <MenuItem value='noOpt' disabled>
+          <MenuItem value="noOpt" disabled>
             <Typography>Nenhum item a ser exibido</Typography>
           </MenuItem>
         )}

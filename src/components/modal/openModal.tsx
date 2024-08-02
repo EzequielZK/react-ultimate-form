@@ -1,5 +1,5 @@
-import AlertFeedback from "./Alert";
-import { AlertColor } from "@mui/material/Alert";
+import AlertFeedback from './Alert';
+import { AlertColor } from '@mui/material/Alert';
 
 let alertRef: AlertFeedback;
 

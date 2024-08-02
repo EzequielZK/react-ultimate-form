@@ -4,7 +4,7 @@ import UInput from './components/inputs/Input';
 import USelect from './components/inputs/Select';
 import UuseFormGroupHandler from './hooks/useFormGroupHandler';
 import UuseFormHandler from './hooks/useFormHandler';
-import UFormButton from './components/buttons/FormButton'
+import UFormButton from './components/buttons/FormButton';
 
 export const FormHandler = UFormHandler;
 export const FormGroupHandler = UFormGroupHandler;
