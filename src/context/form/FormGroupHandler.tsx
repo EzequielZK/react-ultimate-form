@@ -3,7 +3,6 @@ import * as React from 'react';
 import { createContext, useEffect, useState } from 'react';
 import useFormHandler from '../../hooks/useFormHandler';
 import { FormGroupHandlerProvider, FormGroupProps } from './types';
-import openModal from '../../components/modal/openModal';
 
 export const FormGroupHandlerContext = createContext(
   {} as FormGroupHandlerProvider
@@ -101,38 +100,28 @@ export default function FormGroupHandler({
   }
 
   function submit(value?: any) {
-    const { hasValue, requiredMessage } = validateRequiredInputs(true);
-    if (hasValue) {
-      const { inputValid, errorMessage } = validateErrorInputs();
-      if (inputValid) {
-        let newForm = {};
+    let newForm = {};
 
-        let key;
+    let key;
 
-        for (key in formGroup) {
-          let item = formGroup[key].value;
-          if (Array.isArray(item)) {
-            item = item.map(formItem => formItem.value ?? formItem);
-          }
-
-          newForm = { ...newForm, [key]: item };
-        }
-
-        if (onSubmit) {
-          onSubmit({ ...newForm, ...value });
-        }
-
-        if (clearOnSubmit) {
-          clear();
-        }
-        if (submitForm) {
-          formSubmit();
-        }
-      } else {
-        openModal.showAlert('error', errorMessage);
+    for (key in formGroup) {
+      let item = formGroup[key].value;
+      if (Array.isArray(item)) {
+        item = item.map(formItem => formItem.value ?? formItem);
       }
-    } else {
-      openModal.showAlert('error', requiredMessage);
+
+      newForm = { ...newForm, [key]: item };
+    }
+
+    if (onSubmit) {
+      onSubmit({ ...newForm, ...value });
+    }
+
+    if (clearOnSubmit) {
+      clear();
+    }
+    if (submitForm) {
+      formSubmit();
     }
   }
 
