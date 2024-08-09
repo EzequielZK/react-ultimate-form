@@ -4,7 +4,7 @@ import MuiCheckbox from "@mui/material/Checkbox";
 import FormControlLabel from "@mui/material/FormControlLabel";
 import Stack from "@mui/material/Stack";
 import Typography from "@mui/material/Typography";
-import useFormGroupHandler from "@/hooks/useFormGroupHandler";
+import useFormGroupHandler from "../../hooks/useFormGroupHandler";
 import type { CustomCheckboxProps } from "./types";
 import { useTransition } from "react";
 
