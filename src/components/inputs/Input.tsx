@@ -67,7 +67,7 @@ export default function Input({
 
   useEffect(() => {
     if (removeOnUnmount) {
-      getInitialForms({ name, required, label, defaultValue });
+      getInitialForms({ name, required, label, defaultValue, disabled });
     }
     return () => {
       if (removeOnUnmount) {

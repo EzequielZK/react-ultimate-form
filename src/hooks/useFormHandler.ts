@@ -22,7 +22,7 @@ export default function useFormHandler(groupName: string) {
   };
 
   const setDisabled = (name: string, disabled: boolean) => {
-    formHandlerContext.setValue(groupName, name, disabled);
+    formHandlerContext.setDisabled(groupName, name, disabled);
   }
 
   const setError = (name: string, errorMessage: string | null) => {
