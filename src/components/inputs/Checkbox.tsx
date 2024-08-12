@@ -26,6 +26,7 @@ export default function Checkbox({
     required,
     label,
     defaultValue,
+    disabled: props.disabled
   });
   const { value, errorMessage } = data;
   const [, setTransition] = useTransition();
