@@ -56,6 +56,7 @@ export default function Input({
     label,
     defaultValue,
     required,
+    disabled: props.disabled
   });
 
   const { value, errorMessage } = data;

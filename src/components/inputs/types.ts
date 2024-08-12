@@ -80,6 +80,7 @@ export type ItemOption = LabelValueType & {
 
 export interface CustomRadioButtonProps extends RadioGroupProps {
   orientation?: 'row' | 'column';
+  disabled?: boolean
   name: string;
   options: RadioButtonProps[];
   alignItems?: BoxProps['alignItems'];

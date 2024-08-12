@@ -34,6 +34,7 @@ export default function Select({
     label,
     required,
     defaultValue,
+    disabled: props.disabled
   });
 
   const { value = props.multiple ? [] : '', errorMessage } = data;
