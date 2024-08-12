@@ -65,7 +65,7 @@ export type CustomSelectProps = Omit<SelectProps, 'onChange'> & {
 export interface CustomCheckboxProps
   extends Omit<FormControlLabelProps, 'defaultValue' | 'control' | 'required'| 'onChange'> {
   name: string;
-  onChange: (checked: boolean) => void
+  onChange?: (checked: boolean) => void
   required?: boolean | string;
   variant?: any;
   fontWeight?: any;
