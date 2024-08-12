@@ -44,6 +44,7 @@ export default function Input({
 }: InputProps) {
   const {
     setValue,
+    setDisabled,
     setAnotherFieldValue,
     getInitialForms,
     removeValue,
@@ -59,7 +60,7 @@ export default function Input({
     disabled: props.disabled
   });
 
-  const { value, errorMessage } = data;
+  const { value, errorMessage, disabled } = data;
 
   const [innerType, setInnerType] = useState(props.type);
   const [, setTransition] = useTransition();
@@ -82,6 +83,12 @@ export default function Input({
       } as React.ChangeEvent<HTMLInputElement>);
     }
   }, [defaultValue]);
+
+  useEffect(() => {
+    if (props.disabled !== disabled) {
+      setDisabled(props.disabled ?? false)
+    }
+  }, [props.disabled]);
 
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const { value: newValue } = event.target;

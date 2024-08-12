@@ -23,6 +23,8 @@ export default function RadioButton({
     defaultValue,
   });
   const { value } = data;
+
+
   const handleChange = (newValue: string) => {
     setValue(newValue);
   };

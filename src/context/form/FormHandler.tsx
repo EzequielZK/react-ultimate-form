@@ -60,6 +60,14 @@ export default function FormHandler({ children, onSubmit }: FormProps) {
     [forms]
   );
 
+  const setDisabled = useCallback(
+    (groupName: string, name: string, disabled: boolean) => {
+      setFormInputs(groupName, name, { disabled });
+    },
+    [forms]
+  );
+
+
   const setError = useCallback(
     (groupName: string, name: string, errorMessage: string | null) => {
       setFormInputs(groupName, name, { errorMessage });
@@ -103,6 +111,7 @@ export default function FormHandler({ children, onSubmit }: FormProps) {
       value={{
         forms,
         setValue,
+        setDisabled,
         getInitialForms,
         setError,
         clear,

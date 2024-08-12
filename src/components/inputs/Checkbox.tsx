@@ -5,7 +5,7 @@ import FormControlLabel from "@mui/material/FormControlLabel";
 import Typography from "@mui/material/Typography";
 import useFormGroupHandler from "../../hooks/useFormGroupHandler";
 import type { CustomCheckboxProps } from "./types";
-import { useTransition } from "react";
+import { useTransition, useEffect } from "react";
 import Box from '@mui/material/Box'
 
 export default function Checkbox({
@@ -21,18 +21,29 @@ export default function Checkbox({
   onChange,
   ...props
 }: CustomCheckboxProps) {
-  const { setValue, setError, submit, data } = useFormGroupHandler({
+  const { setValue, setDisabled, setError, submit, data } = useFormGroupHandler({
     name,
     required,
     label,
     defaultValue,
     disabled: props.disabled
   });
-  const { value, errorMessage } = data;
+  const { value, errorMessage, disabled } = data;
   const [, setTransition] = useTransition();
 
+  useEffect(() => {
+    if (defaultValue !== value) {
+      handleChange(defaultValue)
+    }
+  }, [defaultValue]);
+
+  useEffect(() => {
+    if (props.disabled !== disabled) {
+      setDisabled(props.disabled ?? false)
+    }
+  }, [props.disabled]);
+
   const handleChange = (
-    event: React.ChangeEvent<HTMLInputElement>,
     checked: boolean
   ) => {
     setValue(checked);
@@ -44,7 +55,7 @@ export default function Checkbox({
       submit({ [name]: checked });
     }
     if (onChange) {
-      setTransition(() => onChange(event, checked));
+      setTransition(() => onChange(checked));
     }
   };
   return (
@@ -55,7 +66,7 @@ export default function Checkbox({
         control={
           <MuiCheckbox
             checked={value}
-            onChange={handleChange}
+            onChange={(_event, checked) => handleChange(checked)}
             sx={{
               fontSize: variant ?? "body1.fontSize",
               fontWeight: fontWeight,

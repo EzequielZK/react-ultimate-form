@@ -36,6 +36,10 @@ export default function useFormGroupHandler({
     formGroupHandlerContext.setValue(name, value);
   };
 
+  const setDisabled = (disabled: boolean) => {
+    formGroupHandlerContext.setDisabled(name, disabled)
+  }
+
   const setAnotherFieldValue = (name: string, value: any) => {
     formGroupHandlerContext.setValue(name, value);
   };
@@ -51,5 +55,6 @@ export default function useFormGroupHandler({
     setError,
     setValue,
     data,
+    setDisabled
   };
 }

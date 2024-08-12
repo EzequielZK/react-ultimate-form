@@ -29,15 +29,21 @@ export default function Select({
   fullWidth,
   ...props
 }: CustomSelectProps) {
-  const { data, setValue, removeValue, submit } = useFormGroupHandler({
+  const {
+    data,
+    setValue,
+    setDisabled,
+    removeValue,
+    submit,
+  } = useFormGroupHandler({
     name,
     label,
     required,
     defaultValue,
-    disabled: props.disabled
+    disabled: props.disabled,
   });
 
-  const { value = props.multiple ? [] : '', errorMessage } = data;
+  const { value = props.multiple ? [] : '', errorMessage, disabled } = data;
 
   const [, setTransition] = useTransition();
 
@@ -54,6 +60,12 @@ export default function Select({
       setValue(defaultValue);
     }
   }, [defaultValue]);
+
+  useEffect(() => {
+    if (props.disabled !== disabled) {
+      setDisabled(props.disabled ?? false);
+    }
+  }, [props.disabled]);
 
   const handleChange = (event: SelectChangeEvent<any>) => {
     if (event.target.value) {
