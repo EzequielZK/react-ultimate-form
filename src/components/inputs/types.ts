@@ -1,6 +1,6 @@
 import { DateType, LabelValueType } from '../../lib/globalTypes';
 import { SvgIconComponent } from '@mui/icons-material';
-import { FormControlLabelProps } from '@mui/material';
+import { BoxProps, FormControlLabelProps } from '@mui/material';
 import { SelectProps } from '@mui/material/Select';
 import { TextFieldProps } from '@mui/material/TextField';
 import { RadioGroupProps } from '@mui/material/RadioGroup';
@@ -70,6 +70,8 @@ export interface CustomCheckboxProps
   fontWeight?: any;
   defaultValue?: boolean;
   autoSubmit?: boolean;
+  alignItems?: BoxProps["alignItems"];
+  justifyContent?: BoxProps["justifyContent"]
 }
 export type ItemOption = LabelValueType & {
   category?: string;
@@ -80,6 +82,8 @@ export interface CustomRadioButtonProps extends RadioGroupProps {
   orientation?: 'row' | 'column';
   name: string;
   options: RadioButtonProps[];
+  alignItems?: BoxProps['alignItems'];
+  justifyContent?: BoxProps['justifyContent'];
 }
 
 export interface RadioButtonProps

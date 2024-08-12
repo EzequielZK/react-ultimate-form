@@ -14,6 +14,8 @@ export default function RadioButton({
   options,
   onChange,
   orientation = 'column',
+  alignItems = 'flex-start',
+  justifyContent = 'flex-start',
   ...props
 }: CustomRadioButtonProps) {
   const { setValue, data } = useFormGroupHandler({
@@ -38,7 +40,12 @@ export default function RadioButton({
           }
         }}
       >
-        <Box display="flex" flexDirection={orientation}>
+        <Box
+          display="flex"
+          flexDirection={orientation}
+          alignItems={alignItems}
+          justifyContent={justifyContent}
+        >
           {options.map(item => (
             <FormControlLabel
               {...item}
