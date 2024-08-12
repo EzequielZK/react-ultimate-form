@@ -15,6 +15,7 @@ export type FormData = {
   loading?: boolean;
   required?: boolean | string;
   label?: string;
+  disabled?: boolean
 };
 
 export type InitialFormParams = {
@@ -24,6 +25,7 @@ export type InitialFormParams = {
   loading?: boolean;
   label?: string;
   defaultValue?: any;
+  disabled?: boolean
 };
 
 export type FormProps = {

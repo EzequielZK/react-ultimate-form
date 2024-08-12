@@ -50,53 +50,37 @@ export default function FormGroupHandler({
     }
   }, [forms]);
 
-  function validateRequiredInputs(isSubmit?: boolean) {
+  function validateRequiredInputs() {
     let hasValue = true;
-    let requiredMessage = '';
 
     let key;
 
     for (key in formGroup) {
-      const { required, value, label } = formGroup[key];
+      const { required, value, disabled } = formGroup[key];
 
-      if ((Array.isArray(value) && !value.length) || (!value && required)) {
-        if (isSubmit) {
-          setError(
-            key,
-            typeof required === 'string' ? required : 'Campo obrigatório'
-          );
-        }
-
+      if (
+        (Array.isArray(value) && !value.length) ||
+        (!value && required && !disabled)
+      ) {
         hasValue = false;
-        if (!requiredMessage) {
-          requiredMessage = `Os seguintes campos obrigatórios encontram-se em branco: ${label}`;
-        } else {
-          requiredMessage += `, ${label}`;
-        }
       }
     }
-    return { hasValue, requiredMessage };
+    return { hasValue };
   }
 
   function validateErrorInputs() {
     let inputValid = true;
-    let errorMessage = '';
 
     let key;
 
     for (key in formGroup) {
-      const { errorMessage: error, label } = formGroup[key];
+      const { errorMessage: error, disabled } = formGroup[key];
 
-      if (error) {
+      if (error && !disabled) {
         inputValid = false;
-        if (!errorMessage) {
-          errorMessage = `Os seguintes campos encontram-se incorretos: ${label}`;
-        } else {
-          errorMessage += `, ${label}`;
-        }
       }
     }
-    return { inputValid, errorMessage };
+    return { inputValid };
   }
 
   function submit(value?: any) {
@@ -106,11 +90,14 @@ export default function FormGroupHandler({
 
     for (key in formGroup) {
       let item = formGroup[key].value;
-      if (Array.isArray(item)) {
-        item = item.map(formItem => formItem.value ?? formItem);
-      }
+      const disabled = formGroup[key].disabled;
+      if (!disabled) {
+        if (Array.isArray(item)) {
+          item = item.map(formItem => formItem.value ?? formItem);
+        }
 
-      newForm = { ...newForm, [key]: item };
+        newForm = { ...newForm, [key]: item };
+      }
     }
 
     if (onSubmit) {

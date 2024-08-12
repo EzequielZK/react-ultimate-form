@@ -25,6 +25,7 @@ export default function FormHandler({ children, onSubmit }: FormProps) {
       label,
       loading,
       defaultValue,
+      disabled,
     }: InitialFormParams) => {
       if (!forms[groupName]?.[name]) {
         setFormInputs(groupName, name, {
@@ -34,6 +35,7 @@ export default function FormHandler({ children, onSubmit }: FormProps) {
           loading,
           required,
           label,
+          disabled,
         });
       }
     },
@@ -87,7 +89,9 @@ export default function FormHandler({ children, onSubmit }: FormProps) {
         const item = forms[key];
         let itemKey;
         for (itemKey in item) {
-          newForm = { ...newForm, [itemKey]: item[itemKey].value };
+          if (!item[itemKey].disabled) {
+            newForm = { ...newForm, [itemKey]: item[itemKey].value };
+          }
         }
       }
       onSubmit(newForm);

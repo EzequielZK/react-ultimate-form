@@ -6,6 +6,7 @@ export default function useFormGroupHandler({
   required,
   label,
   defaultValue,
+  disabled
 }: any) {
   const formGroupHandlerContext = useContext(FormGroupHandlerContext);
 
@@ -15,6 +16,7 @@ export default function useFormGroupHandler({
       required,
       label,
       defaultValue,
+      disabled
     });
   }, []);
 
@@ -23,6 +25,7 @@ export default function useFormGroupHandler({
     errorMessage: null,
     required,
     label,
+    disabled
   };
 
   const setError = (errorMessage: string | null) => {
