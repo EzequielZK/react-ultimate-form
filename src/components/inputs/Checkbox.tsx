@@ -2,11 +2,11 @@ import * as React from 'react'
 
 import MuiCheckbox from "@mui/material/Checkbox";
 import FormControlLabel from "@mui/material/FormControlLabel";
-import Stack from "@mui/material/Stack";
 import Typography from "@mui/material/Typography";
 import useFormGroupHandler from "../../hooks/useFormGroupHandler";
 import type { CustomCheckboxProps } from "./types";
 import { useTransition } from "react";
+import Box from '@mui/material/Box'
 
 export default function Checkbox({
   name,
@@ -16,6 +16,8 @@ export default function Checkbox({
   fontWeight,
   defaultValue = false,
   autoSubmit,
+  alignItems,
+  justifyContent,
   onChange,
   ...props
 }: CustomCheckboxProps) {
@@ -45,7 +47,8 @@ export default function Checkbox({
     }
   };
   return (
-    <Stack direction="column">
+
+    <Box display='flex' flexDirection="column" alignItems={alignItems} justifyContent={justifyContent}>
       <FormControlLabel
         {...props}
         control={
@@ -71,6 +74,6 @@ export default function Checkbox({
           {errorMessage}
         </Typography>
       )}
-    </Stack>
+    </Box>
   );
 }
