@@ -38,6 +38,7 @@ export default function useFormHandler(groupName: string) {
     required,
     label,
     defaultValue,
+    disabled
   }: InitialFormParams) => {
     formHandlerContext.getInitialForms({
       groupName,
@@ -45,6 +46,7 @@ export default function useFormHandler(groupName: string) {
       required,
       label,
       defaultValue,
+      disabled
     });
   };
 
