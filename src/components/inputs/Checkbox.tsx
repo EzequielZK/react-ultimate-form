@@ -16,8 +16,8 @@ export default function Checkbox({
   fontWeight,
   defaultValue = false,
   autoSubmit,
-  alignItems,
-  justifyContent,
+  alignItems = 'flex-start',
+  justifyContent = 'flex-start',
   onChange,
   ...props
 }: CustomCheckboxProps) {
