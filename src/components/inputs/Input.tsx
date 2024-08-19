@@ -95,7 +95,7 @@ export default function Input({
 
     validate(newValue);
 
-    let maskValue = mask ? mask(newValue) : newValue;
+    let maskValue = newValue;
 
     if (maxLength) {
       maskValue = maskValue.substring(0, maxLength);
@@ -156,7 +156,7 @@ export default function Input({
         {...props}
         id={props.id}
         label={label}
-        value={value}
+        value={mask ? mask(value) : value}
         onChange={handleChange}
         variant={variant}
         type={innerType}
