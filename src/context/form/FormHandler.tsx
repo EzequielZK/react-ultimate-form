@@ -67,7 +67,6 @@ export default function FormHandler({ children, onSubmit }: FormProps) {
     [forms]
   );
 
-
   const setError = useCallback(
     (groupName: string, name: string, errorMessage: string | null) => {
       setFormInputs(groupName, name, { errorMessage });
@@ -102,6 +101,7 @@ export default function FormHandler({ children, onSubmit }: FormProps) {
           }
         }
       }
+
       onSubmit(newForm);
     }
   }, [forms]);

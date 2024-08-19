@@ -100,16 +100,17 @@ export default function FormGroupHandler({
         newForm = { ...newForm, [key]: item };
       }
     }
+    if (canSubmit) {
+      if (onSubmit) {
+        onSubmit({ ...newForm, ...value });
+      }
 
-    if (onSubmit) {
-      onSubmit({ ...newForm, ...value });
-    }
-
-    if (clearOnSubmit) {
-      clear();
-    }
-    if (submitForm) {
-      formSubmit();
+      if (clearOnSubmit) {
+        clear();
+      }
+      if (submitForm) {
+        formSubmit();
+      }
     }
   }
 
