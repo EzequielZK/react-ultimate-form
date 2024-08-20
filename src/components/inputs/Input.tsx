@@ -93,13 +93,13 @@ export default function Input({
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const { value: newValue } = event.target;
 
-    validate(newValue);
-
     let maskValue = newValue;
 
     if (maxLength) {
       maskValue = maskValue.substring(0, maxLength);
     }
+
+    validate(maskValue);
 
     setValue(maskValue);
     if (onChange) {
