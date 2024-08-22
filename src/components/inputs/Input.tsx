@@ -57,7 +57,7 @@ export default function Input({
     label,
     defaultValue,
     required,
-    disabled: props.disabled
+    disabled: props.disabled,
   });
 
   const { value, errorMessage, disabled } = data;
@@ -86,20 +86,20 @@ export default function Input({
 
   useEffect(() => {
     if (props.disabled !== disabled) {
-      setDisabled(props.disabled ?? false)
+      setDisabled(props.disabled ?? false);
     }
   }, [props.disabled]);
 
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const { value: newValue } = event.target;
 
+    validate(newValue);
+
     let maskValue = newValue;
 
     if (maxLength) {
       maskValue = maskValue.substring(0, maxLength);
     }
-
-    validate(maskValue);
 
     setValue(maskValue);
     if (onChange) {
