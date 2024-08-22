@@ -6,7 +6,7 @@ export default function useFormGroupHandler({
   required,
   label,
   defaultValue,
-  disabled
+  disabled,
 }: any) {
   const formGroupHandlerContext = useContext(FormGroupHandlerContext);
 
@@ -16,7 +16,14 @@ export default function useFormGroupHandler({
       required,
       label,
       defaultValue,
-      disabled
+      disabled,
+    });
+    formGroupHandlerContext.setDefaultForms({
+      name,
+      required,
+      label,
+      defaultValue,
+      disabled,
     });
   }, []);
 
@@ -25,7 +32,7 @@ export default function useFormGroupHandler({
     errorMessage: null,
     required,
     label,
-    disabled
+    disabled,
   };
 
   const setError = (errorMessage: string | null) => {
@@ -37,8 +44,8 @@ export default function useFormGroupHandler({
   };
 
   const setDisabled = (disabled: boolean) => {
-    formGroupHandlerContext.setDisabled(name, disabled)
-  }
+    formGroupHandlerContext.setDisabled(name, disabled);
+  };
 
   const setAnotherFieldValue = (name: string, value: any) => {
     formGroupHandlerContext.setValue(name, value);
@@ -55,6 +62,6 @@ export default function useFormGroupHandler({
     setError,
     setValue,
     data,
-    setDisabled
+    setDisabled,
   };
 }

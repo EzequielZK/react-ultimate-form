@@ -26,6 +26,38 @@ export default function FormHandler({ children, onSubmit }: FormProps) {
 
   const hasContext = true;
 
+  const setDefaultForms = useCallback(
+    ({
+      groupName,
+      name,
+      required,
+      label,
+      loading,
+      defaultValue,
+      disabled,
+    }: InitialFormParams) => {
+      if (!defaultForms[groupName]?.[name]) {
+        defaultFormDispatch({
+          type: 'SET_DEFAULT_FORM_INPUTS',
+          params: {
+            groupName,
+            name,
+            data: {
+              value: defaultValue,
+              defaultValue,
+              errorMessage: null,
+              loading,
+              required,
+              label,
+              disabled,
+            },
+          },
+        });
+      }
+    },
+    [defaultForm]
+  );
+
   const getInitialForms = useCallback(
     ({
       groupName,
@@ -45,24 +77,6 @@ export default function FormHandler({ children, onSubmit }: FormProps) {
           required,
           label,
           disabled,
-        });
-      }
-      if (!defaultForms[groupName]?.[name]) {
-        defaultFormDispatch({
-          type: 'SET_DEFAULT_FORM_INPUTS',
-          params: {
-            groupName,
-            name,
-            data: {
-              value: defaultValue,
-              defaultValue,
-              errorMessage: null,
-              loading,
-              required,
-              label,
-              disabled,
-            },
-          },
         });
       }
     },
@@ -140,6 +154,7 @@ export default function FormHandler({ children, onSubmit }: FormProps) {
         setValue,
         setDisabled,
         getInitialForms,
+        setDefaultForms,
         setError,
         clear,
         submit,

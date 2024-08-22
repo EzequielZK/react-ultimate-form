@@ -23,6 +23,7 @@ export default function FormGroupHandler({
     setDisabled,
     setError,
     getInitialForms,
+    setDefaultForms,
     clear,
     submit: formSubmit,
   } = useFormHandler(name);
@@ -123,6 +124,7 @@ export default function FormGroupHandler({
         setDisabled,
         setError,
         getInitialForms,
+        setDefaultForms,
         removeValue,
         clear,
         canSubmit,
