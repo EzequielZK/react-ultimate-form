@@ -55,7 +55,7 @@ export default function FormHandler({ children, onSubmit }: FormProps) {
         });
       }
     },
-    [defaultForm]
+    [defaultForms]
   );
 
   const getInitialForms = useCallback(
@@ -124,7 +124,7 @@ export default function FormHandler({ children, onSubmit }: FormProps) {
 
   const clear = (groupName: string) => {
     setTransition(() => {
-      dispatch({ type: 'CLEAR', params: { groupName, defaultForm } });
+      dispatch({ type: 'CLEAR', params: { groupName }, defaultForms });
     });
   };
 

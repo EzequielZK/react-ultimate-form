@@ -12,9 +12,9 @@ type ActionsType = {
 
 export function formReducer(
   forms: typeof initialForm,
-  action: { type: keyof ActionsType; params: any; defaultForm?: Forms }
+  action: { type: keyof ActionsType; params: any; defaultForms?: Forms }
 ) {
-  const { type, params, defaultForm } = action;
+  const { type, params, defaultForms } = action;
   const actions: ActionsType = {
     SET_FORM_INPUTS() {
       const newState: Forms = { ...forms };
@@ -37,8 +37,8 @@ export function formReducer(
     CLEAR() {
       let newState: Forms = { ...forms };
       // let key;
-      if (defaultForm) {
-        newState[params.groupName] = defaultForm[params.groupName];
+      if (defaultForms) {
+        newState[params.groupName] = defaultForms[params.groupName];
       }
 
       // for (key in newState[params.groupName]) {
