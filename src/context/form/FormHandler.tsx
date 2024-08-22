@@ -18,7 +18,10 @@ export const FormHandlerContext = createContext({} as FormHandlerProvider);
 
 export default function FormHandler({ children, onSubmit }: FormProps) {
   const [forms, dispatch] = useReducer(formReducer, initialForm);
-  const [, defaultFormDispatch] = useReducer(defaultFormReducer, defaultForm);
+  const [defaultForms, defaultFormDispatch] = useReducer(
+    defaultFormReducer,
+    defaultForm
+  );
   const [, setTransition] = useTransition();
 
   const hasContext = true;
@@ -43,6 +46,8 @@ export default function FormHandler({ children, onSubmit }: FormProps) {
           label,
           disabled,
         });
+      }
+      if (!defaultForms[groupName]?.[name]) {
         defaultFormDispatch({
           type: 'SET_DEFAULT_FORM_INPUTS',
           params: {
@@ -105,7 +110,7 @@ export default function FormHandler({ children, onSubmit }: FormProps) {
 
   const clear = (groupName: string) => {
     setTransition(() => {
-      dispatch({ type: 'CLEAR', params: { groupName } });
+      dispatch({ type: 'CLEAR', params: { groupName, defaultForm } });
     });
   };
 
