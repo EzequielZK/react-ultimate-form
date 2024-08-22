@@ -7,6 +7,7 @@ export default function useFormGroupHandler({
   label,
   defaultValue,
   disabled,
+  initialValues,
 }: any) {
   const formGroupHandlerContext = useContext(FormGroupHandlerContext);
 
@@ -17,13 +18,7 @@ export default function useFormGroupHandler({
       label,
       defaultValue,
       disabled,
-    });
-    formGroupHandlerContext.setDefaultForms({
-      name,
-      required,
-      label,
-      defaultValue,
-      disabled,
+      initialValues,
     });
   }, []);
 
