@@ -5,7 +5,7 @@ import USelect from './components/inputs/Select';
 import UFormButton from './components/buttons/FormButton';
 import URadioButton from './components/inputs/RadioButton';
 import UCheckbox from './components/inputs/Checkbox';
-import hookUseFormGroupHandler from './hooks/useFormGroupHandler';
+import UImagePicker from './components/pickers/imagePicker';
 
 export const FormHandler = UFormHandler;
 export const FormGroupHandler = UFormGroupHandler;
@@ -14,4 +14,4 @@ export const Select = USelect;
 export const FormButton = UFormButton;
 export const RadioButton = URadioButton;
 export const Checkbox = UCheckbox;
-export const useFormGroupHandler = hookUseFormGroupHandler;
+export const ImagePicker = UImagePicker;
