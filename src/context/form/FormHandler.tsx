@@ -1,7 +1,12 @@
 import * as React from 'react';
 
 import { createContext, useCallback, useReducer, useTransition } from 'react';
-import { formReducer, initialForm } from './reducer';
+import {
+  defaultForm,
+  defaultFormReducer,
+  formReducer,
+  initialForm,
+} from './reducer';
 import {
   FormData,
   FormHandlerProvider,
@@ -13,6 +18,7 @@ export const FormHandlerContext = createContext({} as FormHandlerProvider);
 
 export default function FormHandler({ children, onSubmit }: FormProps) {
   const [forms, dispatch] = useReducer(formReducer, initialForm);
+  const [, defaultFormDispatch] = useReducer(defaultFormReducer, defaultForm);
   const [, setTransition] = useTransition();
 
   const hasContext = true;
@@ -36,6 +42,22 @@ export default function FormHandler({ children, onSubmit }: FormProps) {
           required,
           label,
           disabled,
+        });
+        defaultFormDispatch({
+          type: 'SET_DEFAULT_FORM_INPUTS',
+          params: {
+            groupName,
+            name,
+            data: {
+              value: defaultValue,
+              defaultValue,
+              errorMessage: null,
+              loading,
+              required,
+              label,
+              disabled,
+            },
+          },
         });
       }
     },

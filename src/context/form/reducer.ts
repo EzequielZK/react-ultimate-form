@@ -1,7 +1,8 @@
 import { IndexableObject } from '../../lib/globalTypes';
 import { Forms } from './types';
 
-export const initialForm = {};
+export const initialForm: Forms = {};
+export const defaultForm: Forms = {};
 
 type ActionsType = {
   SET_FORM_INPUTS: () => Forms;
@@ -35,15 +36,38 @@ export function formReducer(
 
     CLEAR() {
       let newState: Forms = { ...forms };
-      let key;
+      // let key;
 
-      for (key in newState[params.groupName]) {
-        const input = newState[params.groupName][key];
-        input.value = input.defaultValue;
-        input.errorMessage = null;
+      newState[params.groupName] = defaultForm[params.groupName]
+      // for (key in newState[params.groupName]) {
+      //   const input = newState[params.groupName][key];
+      //   input.value = input.defaultValue;
+      //   input.errorMessage = null;
 
-        newState[params.groupName][key] = input;
-      }
+      //   newState[params.groupName][key] = input;
+      // }
+      return { ...newState };
+    },
+  };
+  const indexableActions: IndexableObject<any> = actions;
+  return { ...indexableActions[type]() };
+}
+
+export function defaultFormReducer(
+  forms: typeof defaultForm,
+  action: { type: 'SET_DEFAULT_FORM_INPUTS'; params: any }
+) {
+  const { type, params } = action;
+  const actions = {
+    SET_DEFAULT_FORM_INPUTS() {
+      const newState: Forms = { ...forms };
+      newState[params.groupName] = {
+        ...newState[params.groupName],
+        [params.name]: {
+          ...newState[params.groupName]?.[params.name],
+          ...params.data,
+        },
+      };
       return { ...newState };
     },
   };
