@@ -41,6 +41,11 @@ export default function Select({
     required,
     defaultValue,
     disabled: props.disabled,
+    initialValues: {
+      defaultValue,
+      required,
+      disabled: props.disabled,
+    },
   });
 
   const { value = props.multiple ? [] : '', errorMessage, disabled } = data;

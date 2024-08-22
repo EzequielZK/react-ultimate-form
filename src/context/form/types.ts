@@ -16,6 +16,7 @@ export type FormData = {
   required?: boolean | string;
   label?: string;
   disabled?: boolean;
+  initialValues?: { defaultValue?: any; required?: boolean; disabled?: boolean };
 };
 
 export type InitialFormParams = {
@@ -26,6 +27,7 @@ export type InitialFormParams = {
   label?: string;
   defaultValue?: any;
   disabled?: boolean;
+  initialValues: { defaultValue?: any; required?: boolean; disabled?: boolean };
 };
 
 export type FormProps = {
@@ -35,7 +37,6 @@ export type FormProps = {
 
 export type FormHandlerProvider = {
   getInitialForms: (params: InitialFormParams) => void;
-  setDefaultForms: (params: InitialFormParams) => void;
   setValue: (groupName: string, name: string, value: any) => void;
   setDisabled: (groupName: string, name: string, disabled: boolean) => void;
   setError: (
@@ -61,7 +62,6 @@ export type FormGroupProps = {
 export type FormGroupHandlerProvider = {
   submit: (value?: any) => void;
   getInitialForms: (params: any) => void;
-  setDefaultForms: (params: any) => void;
   setDisabled: (name: string, disabled: boolean) => void;
   setValue: (name: string, value: any) => void;
   setError: (name: string, errorMessage: string | null) => void;

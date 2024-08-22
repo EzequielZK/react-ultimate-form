@@ -21,9 +21,11 @@ export default function RadioButton({
   const { setValue, data } = useFormGroupHandler({
     name,
     defaultValue,
+    initialValues: {
+      defaultValue,
+    },
   });
   const { value } = data;
-
 
   const handleChange = (newValue: string) => {
     setValue(newValue);

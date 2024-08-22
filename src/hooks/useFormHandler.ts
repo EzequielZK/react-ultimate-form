@@ -37,29 +37,13 @@ export default function useFormHandler(groupName: string) {
     formHandlerContext.removeValue(groupName, name);
   };
 
-  const setDefaultForms = ({
-    name,
-    required,
-    label,
-    defaultValue,
-    disabled,
-  }: InitialFormParams) => {
-    formHandlerContext.setDefaultForms({
-      groupName,
-      name,
-      required,
-      label,
-      defaultValue,
-      disabled,
-    });
-  };
-
   const getInitialForms = ({
     name,
     required,
     label,
     defaultValue,
     disabled,
+    initialValues,
   }: InitialFormParams) => {
     formHandlerContext.getInitialForms({
       groupName,
@@ -68,6 +52,7 @@ export default function useFormHandler(groupName: string) {
       label,
       defaultValue,
       disabled,
+      initialValues,
     });
   };
 
@@ -75,7 +60,6 @@ export default function useFormHandler(groupName: string) {
     ...formHandlerContext,
     removeValue,
     getInitialForms,
-    setDefaultForms,
     setValue,
     setDisabled,
     setError,

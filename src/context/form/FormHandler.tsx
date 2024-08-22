@@ -1,12 +1,7 @@
 import * as React from 'react';
 
 import { createContext, useCallback, useReducer, useTransition } from 'react';
-import {
-  defaultForm,
-  defaultFormReducer,
-  formReducer,
-  initialForm,
-} from './reducer';
+import { formReducer, initialForm } from './reducer';
 import {
   FormData,
   FormHandlerProvider,
@@ -18,45 +13,9 @@ export const FormHandlerContext = createContext({} as FormHandlerProvider);
 
 export default function FormHandler({ children, onSubmit }: FormProps) {
   const [forms, dispatch] = useReducer(formReducer, initialForm);
-  const [defaultForms, defaultFormDispatch] = useReducer(
-    defaultFormReducer,
-    defaultForm
-  );
   const [, setTransition] = useTransition();
 
   const hasContext = true;
-
-  const setDefaultForms = useCallback(
-    ({
-      groupName,
-      name,
-      required,
-      label,
-      loading,
-      defaultValue,
-      disabled,
-    }: InitialFormParams) => {
-      if (!defaultForms[groupName]?.[name]) {
-        defaultFormDispatch({
-          type: 'SET_DEFAULT_FORM_INPUTS',
-          params: {
-            groupName,
-            name,
-            data: {
-              value: defaultValue,
-              defaultValue,
-              errorMessage: null,
-              loading,
-              required,
-              label,
-              disabled,
-            },
-          },
-        });
-      }
-    },
-    [defaultForms]
-  );
 
   const getInitialForms = useCallback(
     ({
@@ -67,6 +26,7 @@ export default function FormHandler({ children, onSubmit }: FormProps) {
       loading,
       defaultValue,
       disabled,
+      initialValues,
     }: InitialFormParams) => {
       if (!forms[groupName]?.[name]) {
         setFormInputs(groupName, name, {
@@ -77,6 +37,7 @@ export default function FormHandler({ children, onSubmit }: FormProps) {
           required,
           label,
           disabled,
+          initialValues,
         });
       }
     },
@@ -124,7 +85,7 @@ export default function FormHandler({ children, onSubmit }: FormProps) {
 
   const clear = (groupName: string) => {
     setTransition(() => {
-      dispatch({ type: 'CLEAR', params: { groupName }, defaultForms });
+      dispatch({ type: 'CLEAR', params: { groupName } });
     });
   };
 
@@ -154,7 +115,6 @@ export default function FormHandler({ children, onSubmit }: FormProps) {
         setValue,
         setDisabled,
         getInitialForms,
-        setDefaultForms,
         setError,
         clear,
         submit,
