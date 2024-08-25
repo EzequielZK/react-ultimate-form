@@ -17,6 +17,46 @@ export default function FormHandler({ children, onSubmit }: FormProps) {
 
   const hasContext = true;
 
+  const searchForExistingChildren = (
+    children: Array<React.ReactElement>
+  ): string[] => {
+    const { length } = children;
+    let i = 0;
+    let names = [];
+    for (; i < length; i++) {
+      const child = children[i];
+      if (child.props?.name) {
+        names.push(child.props.name);
+      }
+      if (child.props?.children) {
+        const inNames = searchForExistingChildren(child.props.children);
+        names = [...names, ...inNames];
+      }
+    }
+
+    return names;
+  };
+
+  const childrenNames = searchForExistingChildren(children.props.children);
+
+  React.useEffect(() => {
+    if (forms.hasOwnProperty(children.props.name)) {
+      const formsNames = Object.keys(forms[children.props.name]);
+      if (formsNames.length !== childrenNames.length) {
+        const { length } = formsNames;
+        let i = 0;
+
+        for (; i < length; i++) {
+          const formName = formsNames[i];
+
+          if (!childrenNames.includes(formName)) {
+            removeValue(children.props.name, formName);
+          }
+        }
+      }
+    }
+  }, [childrenNames.length]);
+
   const getInitialForms = useCallback(
     ({
       groupName,

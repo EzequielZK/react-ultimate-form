@@ -1,4 +1,4 @@
-import { ReactNode } from 'react';
+import { ReactElement, ReactNode } from 'react';
 
 export type Forms = {
   [index: string]: FormInputs;
@@ -32,7 +32,7 @@ export type InitialFormParams = {
 
 export type FormProps = {
   onSubmit?: (forms: any) => void;
-  children: ReactNode;
+  children: ReactElement;
 };
 
 export type FormHandlerProvider = {
