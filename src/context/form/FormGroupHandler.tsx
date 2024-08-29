@@ -1,8 +1,8 @@
-import * as React from 'react';
+import * as React from "react";
 
-import { createContext, useEffect, useState } from 'react';
-import useFormHandler from '../../hooks/useFormHandler';
-import { FormGroupHandlerProvider, FormGroupProps } from './types';
+import { createContext, useEffect, useState } from "react";
+import useFormHandler from "../../hooks/useFormHandler";
+import { FormGroupHandlerProvider, FormGroupProps } from "./types";
 
 export const FormGroupHandlerContext = createContext(
   {} as FormGroupHandlerProvider
@@ -88,16 +88,32 @@ export default function FormGroupHandler({
     let newForm = {};
 
     let key;
-
+    let groups: { [index: string]: any } = {};
     for (key in formGroup) {
       let item = formGroup[key].value;
       const disabled = formGroup[key].disabled;
+
       if (!disabled) {
         if (Array.isArray(item)) {
-          item = item.map(formItem => formItem.value ?? formItem);
+          item = item.map((formItem) => formItem.value ?? formItem);
         }
+        if (key.includes("/")) {
+          const groupOfFields = key.split("/")[0] as keyof typeof groups;
 
-        newForm = { ...newForm, [key]: item };
+          if (groups.hasOwnProperty(groupOfFields)) {
+            groups = {
+              ...groups,
+              [groupOfFields]: [...groups[groupOfFields], item],
+            };
+          } else {
+            groups = { ...groups, [groupOfFields]: [item] };
+          }
+          if (!formGroup[key].disabled) {
+            newForm = { ...newForm, [groupOfFields]: groups[groupOfFields] };
+          }
+        } else {
+          newForm = { ...newForm, [key]: item };
+        }
       }
     }
     if (canSubmit) {

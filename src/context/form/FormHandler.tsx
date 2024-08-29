@@ -1,13 +1,13 @@
-import * as React from 'react';
+import * as React from "react";
 
-import { createContext, useCallback, useReducer, useTransition } from 'react';
-import { formReducer, initialForm } from './reducer';
+import { createContext, useCallback, useReducer, useTransition } from "react";
+import { formReducer, initialForm } from "./reducer";
 import {
   FormData,
   FormHandlerProvider,
   FormProps,
   InitialFormParams,
-} from './types';
+} from "./types";
 
 export const FormHandlerContext = createContext({} as FormHandlerProvider);
 
@@ -86,7 +86,7 @@ export default function FormHandler({ children, onSubmit }: FormProps) {
 
   const setFormInputs = (groupName: string, name: string, data: FormData) => {
     dispatch({
-      type: 'SET_FORM_INPUTS',
+      type: "SET_FORM_INPUTS",
       params: {
         groupName,
         name,
@@ -118,14 +118,14 @@ export default function FormHandler({ children, onSubmit }: FormProps) {
 
   const removeValue = useCallback(
     (groupName: string, name: string) => {
-      dispatch({ type: 'REMOVE_VALUE', params: { groupName, name } });
+      dispatch({ type: "REMOVE_VALUE", params: { groupName, name } });
     },
     [forms]
   );
 
   const clear = (groupName: string) => {
     setTransition(() => {
-      dispatch({ type: 'CLEAR', params: { groupName } });
+      dispatch({ type: "CLEAR", params: { groupName } });
     });
   };
 
@@ -137,7 +137,23 @@ export default function FormHandler({ children, onSubmit }: FormProps) {
       for (key in forms) {
         const item = forms[key];
         let itemKey;
+        let groups: { [index: string]: any } = {};
         for (itemKey in item) {
+          if (itemKey.includes("/")) {
+            const groupOfFields = itemKey.split("/")[0] as keyof typeof groups;
+            if (groups.hasOwnProperty(groupOfFields)) {
+              groups[groupOfFields] = [
+                ...groups[groupOfFields],
+                item[itemKey].value,
+              ];
+            } else {
+              groups = { ...groups, [groupOfFields]: [item[itemKey].value] };
+            }
+            if (!item[itemKey].disabled) {
+              newForm = { ...newForm, [groupOfFields]: groups[groupOfFields] };
+            }
+          }
+
           if (!item[itemKey].disabled) {
             newForm = { ...newForm, [itemKey]: item[itemKey].value };
           }
