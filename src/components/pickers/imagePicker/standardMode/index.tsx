@@ -98,6 +98,7 @@ export default function ImageStandard({
           <IconButton
             sx={{ position: 'absolute', top: 0, right: 0, bgcolor: '#fff' }}
             aria-label=""
+            size="small"
             onClick={event => {
               event.stopPropagation();
               setImageUrl(null);
