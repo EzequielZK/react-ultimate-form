@@ -72,7 +72,7 @@ export default function ImageEdition({
           },
         }}
         onClick={() => {
-          if (imageObject) {
+          if (image?.imageUrl) {
             setOpenModal(true);
           } else {
             openBrowser();
