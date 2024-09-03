@@ -82,7 +82,7 @@ export default function ImageStandard({
         openBrowser();
       }}
     >
-      {!image ? (
+      {!image?.imageUrl ? (
         <AddPhotoAlternate />
       ) : (
         <ImageComponent

@@ -79,7 +79,7 @@ export default function ImageEdition({
           }
         }}
       >
-        {!image ? (
+        {!image?.imageUrl ? (
           <Avatar sx={{ width: "100%", height: "100%" }} />
         ) : (
           <ImageComponent src={image.imageUrl} width={200} height={200} />
