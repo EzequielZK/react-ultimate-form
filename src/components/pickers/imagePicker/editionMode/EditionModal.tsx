@@ -228,6 +228,7 @@ export default function EditionModal({
             color="primary"
             aria-label="Deletar imagem"
             onClick={() => {
+              
               setImageUrl(null);
               setImageObject(null);
               closeModal();

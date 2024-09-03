@@ -31,8 +31,6 @@ type ImageComponent = ({
   height?: number;
 }) => JSX.Element;
 
-
-
 export type ImageModeProps = {
   setImageUrl: (image: ImageValue) => void;
   setImageObject: (img: HTMLImageElement | null) => void;
@@ -65,7 +63,7 @@ export default function ImagePicker({
   const [imageObject, setImageObject] = useState<HTMLImageElement | null>(null);
 
   useEffect(() => {
-    if (defaultValue?.imageUrl !== value.imageUrl) {
+    if (defaultValue?.imageUrl !== value?.imageUrl) {
       setValue(defaultValue);
     }
   }, [defaultValue?.imageUrl]);
