@@ -12,7 +12,7 @@ type SetImageFunc = (
 export default function ImageStandard({
   setImageUrl,
   setImageObject,
-  imageUrl,
+  image,
   finalSize,
   imageObject,
   width = 180,
@@ -82,11 +82,11 @@ export default function ImageStandard({
         openBrowser();
       }}
     >
-      {!imageUrl ? (
+      {!image ? (
         <AddPhotoAlternate />
       ) : (
         <ImageComponent
-          src={imageUrl}
+          src={image.imageUrl}
           width={imageObject?.width}
           height={imageObject?.height}
         />

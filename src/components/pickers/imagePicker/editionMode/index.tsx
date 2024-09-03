@@ -12,7 +12,7 @@ import Close from "@mui/icons-material/Close";
 export default function ImageEdition({
   setImageUrl,
   setImageObject,
-  imageUrl,
+  image,
   imageObject,
   ImageComponent,
 }: ImageModeProps) {
@@ -79,10 +79,10 @@ export default function ImageEdition({
           }
         }}
       >
-        {!imageUrl ? (
+        {!image ? (
           <Avatar sx={{ width: "100%", height: "100%" }} />
         ) : (
-          <ImageComponent src={imageUrl} width={200} height={200} />
+          <ImageComponent src={image.imageUrl} width={200} height={200} />
         )}
       </Box>
       <Dialog

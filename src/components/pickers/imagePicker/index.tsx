@@ -35,7 +35,7 @@ export type ImageModeProps = {
   setImageUrl: (image: ImageValue) => void;
   setImageObject: (img: HTMLImageElement | null) => void;
   ImageComponent: ImageComponent;
-  imageUrl: string | null;
+  image: ImageValue;
   imageObject: HTMLImageElement | null;
   finalSize?: number;
   width?: number | string;
@@ -79,7 +79,7 @@ export default function ImagePicker({
     <SelectedMode
       imageObject={imageObject}
       setImageObject={setImageObject}
-      imageUrl={value}
+      image={value}
       setImageUrl={setValue}
       finalSize={finalSize}
       ImageComponent={ImageComponent}
