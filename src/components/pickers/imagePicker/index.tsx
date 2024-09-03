@@ -4,12 +4,18 @@ import ImageEdition from './editionMode';
 import ImageStandard from './standardMode';
 import useFormGroupHandler from '../../../hooks/useFormGroupHandler';
 
+export type ImageValue = {
+  imageUrl: string;
+  filename?: string | null;
+  file?: File | null;
+} | null;
+
 type ImagePickerProps = {
   mode?: 'edition' | 'standard';
   finalSize?: number;
   width?: number | string;
   height?: number | string;
-  defaultValue?: string | null;
+  defaultValue?: ImageValue;
   name: string;
   required?: boolean;
   ImageComponent: ImageComponent;
@@ -25,11 +31,7 @@ type ImageComponent = ({
   height?: number;
 }) => JSX.Element;
 
-export type ImageValue = {
-  imageUrl: string;
-  filename?: string | null;
-  file?: File | null;
-} | null;
+
 
 export type ImageModeProps = {
   setImageUrl: (image: ImageValue) => void;
@@ -63,10 +65,10 @@ export default function ImagePicker({
   const [imageObject, setImageObject] = useState<HTMLImageElement | null>(null);
 
   useEffect(() => {
-    if (defaultValue !== value) {
-      setValue(defaultValue as string);
+    if (defaultValue?.imageUrl !== value.imageUrl) {
+      setValue(defaultValue);
     }
-  }, [defaultValue]);
+  }, [defaultValue?.imageUrl]);
 
   const modes = {
     edition: ImageEdition,
