@@ -1,17 +1,19 @@
-import * as React from 'react';
-import Button from '@mui/material/Button';
-import Stack from '@mui/material/Stack';
-import { useEffect, useState } from 'react';
-import Box from '@mui/material/Box';
-import IconButton from '@mui/material/IconButton';
-import Delete from '@mui/icons-material/Delete';
-import Tooltip from '@mui/material/Tooltip';
-import setWidthAndHeight from '../../../../lib/utils/getResponsiveImageSize';
+import * as React from "react";
+import Button from "@mui/material/Button";
+import Stack from "@mui/material/Stack";
+import { useEffect, useState } from "react";
+import Box from "@mui/material/Box";
+import IconButton from "@mui/material/IconButton";
+import Delete from "@mui/icons-material/Delete";
+import Tooltip from "@mui/material/Tooltip";
+import setWidthAndHeight from "../../../../lib/utils/getResponsiveImageSize";
+import { ImageValue } from "..";
 
 type ImageEditionProps = {
-  setImageUrl: (imageUrl: string | null) => void;
+  setImageUrl: (image: ImageValue) => void;
   setImageObject: (img: HTMLImageElement | null) => void;
   uploadedImg: HTMLImageElement;
+  file: File | null;
   closeModal: () => void;
 };
 
@@ -29,10 +31,12 @@ export default function EditionModal({
   setImageUrl,
   setImageObject,
   uploadedImg,
+  file,
   closeModal,
 }: ImageEditionProps) {
   const [mounted, setMounted] = useState(false);
   const [img, setImg] = useState(uploadedImg);
+  const [newFile, setNewFile] = useState<File | null>(file);
 
   useEffect(() => {
     setMounted(true);
@@ -41,16 +45,16 @@ export default function EditionModal({
   useEffect(() => {
     drawImageFlow();
   }, [img]);
-
+  
   let mouseDown = false;
   let newCanvasUrl: string;
 
   function drawImageFlow() {
-    const canvas = document.getElementById('imageCanvas') as HTMLCanvasElement;
-    const ctx = canvas?.getContext('2d');
+    const canvas = document.getElementById("imageCanvas") as HTMLCanvasElement;
+    const ctx = canvas?.getContext("2d");
 
-    const c = document.createElement('canvas');
-    const cx = c.getContext('2d');
+    const c = document.createElement("canvas");
+    const cx = c.getContext("2d");
     const { width, height } = setWidthAndHeight(img.width, img.height, 250);
 
     const portrait = height > width;
@@ -60,7 +64,7 @@ export default function EditionModal({
 
     const radius = !portrait ? height / 2 : width / 2;
 
-    const Circle = (function(this: Circle, x: number, y: number) {
+    const Circle = function (this: Circle, x: number, y: number) {
       this.startingAngle = 0;
       this.endAngle = 2 * Math.PI;
       this.x = x;
@@ -91,9 +95,9 @@ export default function EditionModal({
           this.r * 2,
           this.r * 2
         );
-        newCanvasUrl = c.toDataURL('image/png');
+        newCanvasUrl = c.toDataURL("image/png");
       };
-    } as any) as { new (x: number, y: number): Circle };
+    } as any as { new (x: number, y: number): Circle };
 
     const circle = new Circle(canvas.width / 2, canvas.height / 2);
 
@@ -132,9 +136,9 @@ export default function EditionModal({
       }
     }
 
-    canvas.onmousemove = event => move(event, canvas);
-    canvas.onmousedown = event => setDraggable(event);
-    canvas.onmouseup = event => setDraggable(event);
+    canvas.onmousemove = (event) => move(event, canvas);
+    canvas.onmousedown = (event) => setDraggable(event);
+    canvas.onmouseup = (event) => setDraggable(event);
 
     draw();
   }
@@ -145,9 +149,9 @@ export default function EditionModal({
   const setDraggable = (event: MouseEvent) => {
     var type = event.type;
 
-    if (type === 'mousedown') {
+    if (type === "mousedown") {
       mouseDown = true;
-    } else if (type === 'mouseup') {
+    } else if (type === "mouseup") {
       mouseDown = false;
     }
   };
@@ -163,16 +167,21 @@ export default function EditionModal({
   const clip = () => {
     const clippedImage = new Image();
     clippedImage.onload = () => {
-      setImageUrl(clippedImage.src);
+      
+      setImageUrl({
+        imageUrl: clippedImage.src,
+        filename: newFile?.name,
+        file: newFile,
+      });
       setImageObject(img);
     };
     clippedImage.src = newCanvasUrl;
   };
 
   const openBrowser = () => {
-    const input = document.createElement('input');
-    input.type = 'file';
-    input.accept = 'image/png';
+    const input = document.createElement("input");
+    input.type = "file";
+    input.accept = "image/png";
     input.click();
     input.onchange = getImageUrl;
   };
@@ -187,12 +196,14 @@ export default function EditionModal({
     const target = event.target as HTMLInputElement;
     const files = target.files as FileList;
     // setFilename(files[0].name);
+
+    setNewFile(files[0]);
     img.src = URL.createObjectURL(files[0]);
   };
 
   return (
     <Stack
-      sx={{ width: '100%', height: '100%' }}
+      sx={{ width: "100%", height: "100%" }}
       alignItems="center"
       //   justifyContent="space-between"
       direction="column"
@@ -208,7 +219,7 @@ export default function EditionModal({
         <Box
           display="flex"
           flexDirection="column"
-          sx={{ bgcolor: 'background.default' }}
+          sx={{ bgcolor: "background.default" }}
         >
           <canvas id="imageCanvas"></canvas>
         </Box>
@@ -221,14 +232,14 @@ export default function EditionModal({
               setImageObject(null);
               closeModal();
             }}
-            sx={{ position: 'absolute', top: 8, right: 8 }}
+            sx={{ position: "absolute", top: 8, right: 8 }}
           >
             <Delete />
           </IconButton>
         </Tooltip>
       </Box>
 
-      <Stack direction="row" alignItems="center" gap={2} sx={{ width: '100%' }}>
+      <Stack direction="row" alignItems="center" gap={2} sx={{ width: "100%" }}>
         <Button
           variant="outlined"
           fullWidth

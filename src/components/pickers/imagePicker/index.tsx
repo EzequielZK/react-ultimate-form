@@ -25,8 +25,14 @@ type ImageComponent = ({
   height?: number;
 }) => JSX.Element;
 
+export type ImageValue = {
+  imageUrl: string;
+  filename?: string | null;
+  file?: File | null;
+} | null;
+
 export type ImageModeProps = {
-  setImageUrl: (imageUrl: string | null) => void;
+  setImageUrl: (image: ImageValue) => void;
   setImageObject: (img: HTMLImageElement | null) => void;
   ImageComponent: ImageComponent;
   imageUrl: string | null;

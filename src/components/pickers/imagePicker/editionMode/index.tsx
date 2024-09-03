@@ -1,13 +1,13 @@
-import * as React from 'react';
-import Box from '@mui/material/Box';
-import Avatar from '@mui/material/Avatar';
-import EditionModal from './EditionModal';
-import { ImageModeProps } from '..';
-import Dialog from '@mui/material/Dialog';
-import DialogTitle from '@mui/material/DialogTitle';
-import DialogContent from '@mui/material/DialogContent';
-import IconButton from '@mui/material/IconButton';
-import Close from '@mui/icons-material/Close';
+import * as React from "react";
+import Box from "@mui/material/Box";
+import Avatar from "@mui/material/Avatar";
+import EditionModal from "./EditionModal";
+import { ImageModeProps } from "..";
+import Dialog from "@mui/material/Dialog";
+import DialogTitle from "@mui/material/DialogTitle";
+import DialogContent from "@mui/material/DialogContent";
+import IconButton from "@mui/material/IconButton";
+import Close from "@mui/icons-material/Close";
 
 export default function ImageEdition({
   setImageUrl,
@@ -17,12 +17,10 @@ export default function ImageEdition({
   ImageComponent,
 }: ImageModeProps) {
   const [openModal, setOpenModal] = React.useState(false);
+  const [file, setFile] = React.useState<File | null>(null);
 
-  const handleClose = (
-    _: React.SyntheticEvent | Event,
-    reason?: string
-  ) => {
-    if (reason === 'clickaway') {
+  const handleClose = (_: React.SyntheticEvent | Event, reason?: string) => {
+    if (reason === "clickaway") {
       return;
     }
     setOpenModal(false);
@@ -35,9 +33,9 @@ export default function ImageEdition({
   };
 
   const openBrowser = () => {
-    const input = document.createElement('input');
-    input.type = 'file';
-    input.accept = 'image/png';
+    const input = document.createElement("input");
+    input.type = "file";
+    input.accept = "image/png";
     input.click();
     input.onchange = getImageUrl;
   };
@@ -51,6 +49,7 @@ export default function ImageEdition({
     };
     const target = event.target as HTMLInputElement;
     const files = target.files as FileList;
+    setFile(files[0]);
     img.src = URL.createObjectURL(files[0]);
   };
 
@@ -63,13 +62,13 @@ export default function ImageEdition({
         borderRadius="50%"
         //   p={imageUrl ? 0 : 2}
         sx={{
-          position: 'relative',
-          display: 'flex',
-          alignItems: 'center',
-          justifyContent: 'center',
-          flexDirection: 'column',
-          '&:hover': {
-            cursor: 'pointer',
+          position: "relative",
+          display: "flex",
+          alignItems: "center",
+          justifyContent: "center",
+          flexDirection: "column",
+          "&:hover": {
+            cursor: "pointer",
           },
         }}
         onClick={() => {
@@ -81,7 +80,7 @@ export default function ImageEdition({
         }}
       >
         {!imageUrl ? (
-          <Avatar sx={{ width: '100%', height: '100%' }} />
+          <Avatar sx={{ width: "100%", height: "100%" }} />
         ) : (
           <ImageComponent src={imageUrl} width={200} height={200} />
         )}
@@ -89,29 +88,29 @@ export default function ImageEdition({
       <Dialog
         open={openModal}
         onClose={handleClose}
-        sx={{ '& .MuiDialog-paper': { width: 700, maxWidth: '100%' } }}
+        sx={{ "& .MuiDialog-paper": { width: 700, maxWidth: "100%" } }}
       >
         <DialogTitle
           id="dialog-title"
           sx={{
             bgcolor: `primary.main`,
             color: `primary.contrastText`,
-            display: 'flex',
-            alignItems: 'center',
-            justifyContent: 'space-between',
-            width: '100%',
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "space-between",
+            width: "100%",
           }}
         >
           Edite sua Imagem
           <IconButton onClick={close}>
-            <Close sx={{ color: 'primary.contrastText' }} />
+            <Close sx={{ color: "primary.contrastText" }} />
           </IconButton>
         </DialogTitle>
 
         <DialogContent
           sx={{
-            display: 'flex',
-            flexDirection: 'column',
+            display: "flex",
+            flexDirection: "column",
             gap: 8,
           }}
         >
@@ -120,6 +119,7 @@ export default function ImageEdition({
               setImageUrl={setImageUrl}
               setImageObject={setImageObject}
               uploadedImg={imageObject}
+              file={file}
               closeModal={close}
             />
           )}
