@@ -62,21 +62,26 @@ export default function ImagePicker({
 
   const [imageObject, setImageObject] = useState<HTMLImageElement | null>(null);
 
-  useEffect(() => {
-    if (defaultValue?.imageUrl !== value?.imageUrl) {
-      setValue(defaultValue);
-    }
-  }, [defaultValue?.imageUrl]);
-
-  useEffect(() => {
+  const getImageObject = () => {
     if (defaultValue) {
       const img = new Image();
       img.onload = () => {
         img.setAttribute('crossorigin', 'anonymous');
         setImageObject(img);
       };
-      img.src = defaultValue.imageUrl;
+      img.src = defaultValue?.imageUrl;
     }
+  };
+
+  useEffect(() => {
+    if (defaultValue?.imageUrl !== value?.imageUrl) {
+      getImageObject();
+      setValue(defaultValue);
+    }
+  }, [defaultValue?.imageUrl]);
+
+  useEffect(() => {
+    getImageObject();
   }, []);
 
   const modes = {
