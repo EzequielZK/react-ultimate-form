@@ -68,6 +68,17 @@ export default function ImagePicker({
     }
   }, [defaultValue?.imageUrl]);
 
+  useEffect(() => {
+    if (defaultValue) {
+      const img = new Image();
+      img.onload = () => {
+        img.setAttribute('crossorigin', 'anonymous');
+        setImageObject(img);
+      };
+      img.src = defaultValue.imageUrl;
+    }
+  }, []);
+
   const modes = {
     edition: ImageEdition,
     standard: ImageStandard,
