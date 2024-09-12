@@ -20,7 +20,7 @@ export default function useFormGroupHandler({
       disabled,
       initialValues,
     });
-  }, []);
+  }, [name]);
 
   const data = formGroupHandlerContext.formGroup?.[name] ?? {
     value: defaultValue,

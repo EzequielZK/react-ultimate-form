@@ -13,49 +13,60 @@ export const FormHandlerContext = createContext({} as FormHandlerProvider);
 
 export default function FormHandler({ children, onSubmit }: FormProps) {
   const [forms, dispatch] = useReducer(formReducer, initialForm);
+
   const [, setTransition] = useTransition();
 
   const hasContext = true;
 
   const searchForExistingChildren = (
-    children: Array<React.ReactElement>
+    children: Array<React.ReactElement> | React.ReactElement
   ): string[] => {
-    const { length } = children;
-    let i = 0;
     let names = [];
-    for (; i < length; i++) {
-      const child = children[i];
-      if (child.props?.name) {
-        names.push(child.props.name);
+    if (Array.isArray(children)) {
+      const { length } = children;
+      let i = 0;
+
+      for (; i < length; i++) {
+        const child = children[i];
+
+        if (child.props?.name) {
+          names.push(child.props.name);
+        }
+        if (child.props?.children) {
+          const inNames = searchForExistingChildren(child.props.children);
+          names = [...names, ...inNames];
+        }
       }
-      if (child.props?.children) {
-        const inNames = searchForExistingChildren(child.props.children);
+    } else {
+      if (children.props?.name) {
+        names.push(children.props.name);
+      }
+      if (children.props?.children) {
+        const inNames = searchForExistingChildren(children.props.children);
         names = [...names, ...inNames];
       }
     }
-
     return names;
   };
 
-  const childrenNames = searchForExistingChildren(children.props.children);
+  const removeFieldOnDynamicForm = () => {
+    const childrenNames = searchForExistingChildren(children.props.children);
 
-  React.useEffect(() => {
     if (forms.hasOwnProperty(children.props.name)) {
       const formsNames = Object.keys(forms[children.props.name]);
-      if (formsNames.length !== childrenNames.length) {
-        const { length } = formsNames;
-        let i = 0;
 
-        for (; i < length; i++) {
-          const formName = formsNames[i];
+      const { length } = formsNames;
+      let i = 0;
 
-          if (!childrenNames.includes(formName)) {
-            removeValue(children.props.name, formName);
-          }
+      for (; i < length; i++) {
+        const formName = formsNames[i];
+
+        if (!childrenNames.includes(formName)) {
+          removeValue(children.props.name, formName);
         }
       }
     }
-  });
+  };
 
   const getInitialForms = useCallback(
     ({
@@ -79,6 +90,7 @@ export default function FormHandler({ children, onSubmit }: FormProps) {
           disabled,
           initialValues,
         });
+        removeFieldOnDynamicForm();
       }
     },
     [forms]
