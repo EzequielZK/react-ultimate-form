@@ -63,7 +63,7 @@ export default function ImagePicker({
   const [imageObject, setImageObject] = useState<HTMLImageElement | null>(null);
 
   const getImageObject = () => {
-    if (defaultValue) {
+    if (defaultValue?.imageUrl) {
       const img = new Image();
       img.onload = () => {
         img.setAttribute('crossorigin', 'anonymous');
