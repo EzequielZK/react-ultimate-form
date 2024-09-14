@@ -27,6 +27,7 @@ export default function Select({
   loading,
   helperText,
   fullWidth,
+  size,
   ...props
 }: CustomSelectProps) {
   const {
@@ -90,7 +91,7 @@ export default function Select({
   };
 
   return (
-    <FormControl variant={props.variant} fullWidth={fullWidth}>
+    <FormControl variant={props.variant} fullWidth={fullWidth} size={size}>
       <InputLabel>
         {label}
         {required ? '*' : null}
