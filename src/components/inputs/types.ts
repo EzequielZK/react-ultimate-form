@@ -63,16 +63,19 @@ export type CustomSelectProps = Omit<SelectProps, 'onChange'> & {
 };
 
 export interface CustomCheckboxProps
-  extends Omit<FormControlLabelProps, 'defaultValue' | 'control' | 'required'| 'onChange'> {
+  extends Omit<
+    FormControlLabelProps,
+    'defaultValue' | 'control' | 'required' | 'onChange'
+  > {
   name: string;
-  onChange?: (checked: boolean) => void
+  onChange?: (checked: boolean) => void;
   required?: boolean | string;
   variant?: any;
   fontWeight?: any;
   defaultValue?: boolean;
   autoSubmit?: boolean;
-  alignItems?: BoxProps["alignItems"];
-  justifyContent?: BoxProps["justifyContent"]
+  alignItems?: BoxProps['alignItems'];
+  justifyContent?: BoxProps['justifyContent'];
 }
 export type ItemOption = LabelValueType & {
   category?: string;
@@ -81,7 +84,7 @@ export type ItemOption = LabelValueType & {
 
 export interface CustomRadioButtonProps extends RadioGroupProps {
   orientation?: 'row' | 'column';
-  disabled?: boolean
+  disabled?: boolean;
   name: string;
   options: RadioButtonProps[];
   alignItems?: BoxProps['alignItems'];
@@ -103,9 +106,11 @@ export interface CustomAutocompleteProps {
   name: string;
   defaultValue?: null | ItemOption[] | ItemOption;
   required?: boolean;
+  disabled?: boolean;
   loading?: boolean;
   sx?: any;
   autoSubmit?: boolean;
+  removeOnUnmount?: boolean;
   onOpen?: () => void;
   onClose?: () => void;
   call?: (
