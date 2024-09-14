@@ -107,7 +107,7 @@ export default function Select({
           props.multiple
             ? opts.map((opt: any) => (
                 <Chip
-                  key={opt}
+                  key={options.find(option => option.value === opt)?.id}
                   label={options.find(option => option.value === opt)?.label}
                   sx={{ ml: 1 }}
                 />

@@ -18,6 +18,7 @@ export type LabelValueType = {
   label?: string;
   value?: any;
   icon?: ReactNode;
+  id: string;
 };
 
 export type DateType = Date | string | null;

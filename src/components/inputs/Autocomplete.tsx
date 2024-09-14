@@ -123,7 +123,7 @@ export default function Autocomplete({
         return (
           <ListItem
             {...props}
-            key={`${option.category}-${option.label}`}
+            key={option.id}
             sx={{
               bgcolor: (theme) =>
                 `${theme.palette.background.paper} !important`,
