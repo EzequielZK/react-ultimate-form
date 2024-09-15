@@ -91,11 +91,7 @@ export interface CustomRadioButtonProps extends RadioGroupProps {
   justifyContent?: BoxProps['justifyContent'];
 }
 
-export interface RadioButtonProps
-  extends Omit<FormControlLabelProps, 'control'> {
-  value: string | number;
-  label: ReactNode;
-}
+export interface RadioButtonProps extends Omit<LabelValueType, 'icon'> {}
 
 export interface CustomAutocompleteProps {
   options: ItemOption[];
