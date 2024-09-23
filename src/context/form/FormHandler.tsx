@@ -29,19 +29,19 @@ export default function FormHandler({ children, onSubmit }: FormProps) {
       for (; i < length; i++) {
         const child = children[i];
 
-        if (child.props?.name) {
+        if (child?.props?.name) {
           names.push(child.props.name);
         }
-        if (child.props?.children) {
+        if (child?.props?.children) {
           const inNames = searchForExistingChildren(child.props.children);
           names = [...names, ...inNames];
         }
       }
     } else {
-      if (children.props?.name) {
+      if (children?.props?.name) {
         names.push(children.props.name);
       }
-      if (children.props?.children) {
+      if (children?.props?.children) {
         const inNames = searchForExistingChildren(children.props.children);
         names = [...names, ...inNames];
       }
