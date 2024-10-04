@@ -7,16 +7,6 @@ export default function useFormHandler(groupName: string) {
 
   const formGroup = formHandlerContext.forms[groupName] ?? {};
 
-  let newForms: typeof formGroup = {};
-
-  let key;
-
-  for (key in formGroup) {
-    const item = formGroup[key];
-
-    newForms = { ...newForms, [key]: item.value };
-  }
-
   const setValue = (name: string, value: any) => {
     formHandlerContext.setValue(groupName, name, value);
   };
@@ -65,7 +55,6 @@ export default function useFormHandler(groupName: string) {
     setError,
     formGroup,
     forms: formHandlerContext.forms,
-    values: newForms,
     clear,
   };
 }

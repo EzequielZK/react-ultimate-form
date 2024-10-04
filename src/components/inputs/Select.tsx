@@ -30,13 +30,7 @@ export default function Select({
   size,
   ...props
 }: CustomSelectProps) {
-  const {
-    data,
-    setValue,
-    setDisabled,
-    removeValue,
-    submit,
-  } = useFormGroupHandler({
+  const { data, setValue, removeValue, submit } = useFormGroupHandler({
     name,
     label,
     required,
@@ -60,18 +54,6 @@ export default function Select({
       }
     };
   }, []);
-
-  useEffect(() => {
-    if (defaultValue !== value) {
-      setValue(defaultValue);
-    }
-  }, [defaultValue]);
-
-  useEffect(() => {
-    if (props.disabled !== disabled) {
-      setDisabled(props.disabled ?? false);
-    }
-  }, [props.disabled]);
 
   const handleChange = (event: SelectChangeEvent<any>) => {
     if (event.target.value) {
@@ -100,6 +82,7 @@ export default function Select({
       <MuiSelect
         {...props}
         required={required}
+        disabled={disabled}
         label={label}
         value={value}
         onClick={event => event.stopPropagation()}

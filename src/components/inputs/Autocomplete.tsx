@@ -47,7 +47,6 @@ export default function Autocomplete({
     submit,
     setAnotherFieldValue,
     removeValue,
-    setDisabled,
   } = useFormGroupHandler({
     name,
     label,
@@ -58,10 +57,10 @@ export default function Autocomplete({
   const { value, errorMessage, disabled } = data;
 
   const handleChange = (
-    event: any,
+    _: any,
     newValue: ItemOption | ItemOption[] | null
   ) => {
-    console.log({ value: event.target.value });
+    
     setValue(newValue);
     if (autoSubmit) {
       submit({ [name]: newValue });
@@ -80,22 +79,11 @@ export default function Autocomplete({
     };
   }, []);
 
-  React.useEffect(() => {
-    if (defaultValue !== value) {
-      setValue(defaultValue);
-    }
-  }, [defaultValue]);
-
-  React.useEffect(() => {
-    if (props.disabled !== disabled) {
-      setDisabled(props.disabled ?? false);
-    }
-  }, [props.disabled]);
-
   return (
     <MuiAutocomplete
       {...props}
       fullWidth
+      disabled={disabled}
       loading={loading}
       color="primary"
       options={options}

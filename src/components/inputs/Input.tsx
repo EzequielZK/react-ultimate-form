@@ -82,14 +82,6 @@ export default function Input({
   }, []);
 
   useEffect(() => {
-    if (defaultValue !== value) {
-      handleChange({
-        target: { value: defaultValue },
-      } as React.ChangeEvent<HTMLInputElement>);
-    }
-  }, [defaultValue]);
-
-  useEffect(() => {
     if (props.disabled !== disabled) {
       setDisabled(props.disabled ?? false);
     }
