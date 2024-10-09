@@ -11,6 +11,7 @@ import Typography from '@mui/material/Typography';
 import InputLabel from '@mui/material/InputLabel';
 import Chip from '@mui/material/Chip';
 import FormHelperText from '@mui/material/FormHelperText';
+import Box from '@mui/material/Box';
 
 const ITEM_HEIGHT = 48;
 const ITEM_PADDING_TOP = 8;
@@ -88,15 +89,23 @@ export default function Select({
         onClick={event => event.stopPropagation()}
         onChange={handleChange}
         renderValue={opts =>
-          props.multiple
-            ? opts.map((opt: any) => (
-                <Chip
-                  key={options.find(option => option.value === opt)?.id}
-                  label={options.find(option => option.value === opt)?.label}
-                  sx={{ ml: 1 }}
-                />
-              ))
-            : options.find(option => option.value === opts)?.label
+          props.multiple ? (
+            opts.map((opt: any) => (
+              <Chip
+                key={options.find(option => option.value === opt)?.id}
+                label={options.find(option => option.value === opt)?.label}
+                sx={{ ml: 1 }}
+              />
+            ))
+          ) : options.find(option => option.value === opts)?.icon ? (
+            <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
+              {options.find(option => option.value === opts)?.icon}
+
+              {options.find(option => option.value === opts)?.label}
+            </Box>
+          ) : (
+            options.find(option => option.value === opts)?.label
+          )
         }
         MenuProps={{
           slotProps: {
