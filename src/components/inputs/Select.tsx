@@ -29,9 +29,16 @@ export default function Select({
   helperText,
   fullWidth,
   size,
+  sx,
   ...props
 }: CustomSelectProps) {
-  const { data, setValue, removeValue, submit } = useFormGroupHandler({
+  const {
+    data,
+    setValue,
+    setDisabled,
+    removeValue,
+    submit,
+  } = useFormGroupHandler({
     name,
     label,
     required,
@@ -56,6 +63,18 @@ export default function Select({
     };
   }, []);
 
+  useEffect(() => {
+    if (defaultValue !== value) {
+      setValue(defaultValue);
+    }
+  }, [defaultValue]);
+
+  useEffect(() => {
+    if (props.disabled !== disabled) {
+      setDisabled(props.disabled ?? false);
+    }
+  }, [props.disabled]);
+
   const handleChange = (event: SelectChangeEvent<any>) => {
     if (event.target.value) {
       setValue(event.target.value);
@@ -72,9 +91,15 @@ export default function Select({
       }
     }
   };
-
+  console.log({ value });
   return (
-    <FormControl variant={props.variant} fullWidth={fullWidth} size={size}>
+    <FormControl
+      variant={props.variant}
+      fullWidth={fullWidth}
+      size={size}
+      disabled={props.disabled}
+      sx={sx}
+    >
       <InputLabel>
         {label}
         {required ? '*' : null}
@@ -82,8 +107,8 @@ export default function Select({
 
       <MuiSelect
         {...props}
+        fullWidth
         required={required}
-        disabled={disabled}
         label={label}
         value={value}
         onClick={event => event.stopPropagation()}
@@ -92,7 +117,7 @@ export default function Select({
           props.multiple ? (
             opts.map((opt: any) => (
               <Chip
-                key={options.find(option => option.value === opt)?.id}
+                key={opt}
                 label={options.find(option => option.value === opt)?.label}
                 sx={{ ml: 1 }}
               />
@@ -125,7 +150,7 @@ export default function Select({
         ) : options.length ? (
           options.map(opt => (
             <MenuItem
-              key={opt.label}
+              key={opt.id}
               value={opt.value}
               sx={{ display: 'flex', alignItems: 'center', gap: 1 }}
             >
@@ -140,7 +165,10 @@ export default function Select({
           </MenuItem>
         )}
       </MuiSelect>
-      {<FormHelperText>{errorMessage ?? helperText}</FormHelperText>}
+      {errorMessage ||
+        (helperText && (
+          <FormHelperText>{errorMessage || helperText}</FormHelperText>
+        ))}
     </FormControl>
   );
 }
